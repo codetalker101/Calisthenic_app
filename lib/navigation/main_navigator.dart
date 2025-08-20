@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../pages/home.dart';
 import '../pages/workouts/workouts.dart';
 import '../pages/planners/planners.dart';
-import '../pages/profile/profile.dart';
+import '../pages/settings/setting.dart';
 import '../pages/includes/_navbar.dart';
 
 class MainNavigator extends StatefulWidget {
@@ -22,7 +22,13 @@ class _MainNavigatorState extends State<MainNavigator> {
   ];
 
   void _onTabTapped(int index) {
-    if (index != _currentIndex) {
+    if (index == _currentIndex) {
+      // If tapping the same tab, pop until root
+      _navKeys[index].currentState?.popUntil((route) => route.isFirst);
+    } else {
+      // If switching to another tab, also reset that tab
+      _navKeys[index].currentState?.popUntil((route) => route.isFirst);
+
       setState(() => _currentIndex = index);
     }
   }
@@ -59,11 +65,11 @@ class _MainNavigatorState extends State<MainNavigator> {
               builder: (context) => const PlannersPage(),
             ),
           ),
-          // Profile Tab Navigator
+          // Settings Tab Navigator
           Navigator(
             key: _navKeys[3],
             onGenerateRoute: (route) => MaterialPageRoute(
-              builder: (context) => const ProfilePage(),
+              builder: (context) => const SettingsPage(),
             ),
           ),
         ],

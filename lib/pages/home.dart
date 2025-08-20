@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'dart:async';
-import 'includes/_sidebar.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import '../pages/Profile/profile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -45,30 +46,6 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void openRightSidebar(BuildContext context) {
-    showGeneralDialog(
-      context: context,
-      barrierDismissible: true,
-      barrierLabel: '',
-      transitionDuration: const Duration(milliseconds: 300),
-      pageBuilder: (context, animation, secondaryAnimation) {
-        return const RightSidebar();
-      },
-      transitionBuilder: (context, animation, secondaryAnimation, child) {
-        return SlideTransition(
-          position: Tween<Offset>(
-            begin: const Offset(1, 0), // Slide from the right
-            end: Offset.zero,
-          ).animate(CurvedAnimation(
-            parent: animation,
-            curve: Curves.easeInOut,
-          )),
-          child: child,
-        );
-      },
-    );
-  }
-
   // meals card background by it's type
   String _getMealImage(String mealType) {
     switch (mealType.toLowerCase()) {
@@ -97,20 +74,55 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
       appBar: AppBar(
-        title: const Text(
-          'CalistherPAL',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'AudioLinkMono',
-            color: Colors.black,
-          ),
-        ),
         backgroundColor: const Color(0xFFFFFFFF),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            Text(
+              'CalistherPAL',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'AudioLinkMono',
+                color: Colors.black,
+              ),
+            ),
+            SizedBox(height: 2),
+            Text(
+              'Welcome back, Malik 👋',
+              style: TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.w400,
+                color: Colors.black87,
+              ),
+            ),
+          ],
+        ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.menu, color: Colors.black),
-            onPressed: () => openRightSidebar(context),
+          Padding(
+            padding: const EdgeInsets.only(right: 9.0),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (_, __, ___) => const ProfilePage(),
+                    transitionDuration: Duration.zero,
+                    reverseTransitionDuration: Duration.zero,
+                  ),
+                );
+              },
+              child: CircleAvatar(
+                radius: 18,
+                backgroundColor: Colors.white,
+                child: SvgPicture.asset(
+                  'assets/icons/ProfileIcon1.svg',
+                  width: 30,
+                  height: 30,
+                  color: Colors.black54,
+                ),
+              ),
+            ),
           ),
         ],
       ),
@@ -126,7 +138,7 @@ class _HomePageState extends State<HomePage> {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withAlpha((0.1 * 255)
+                    color: Colors.black.withAlpha((0.2 * 255)
                         .toInt()), // replaced withOpacity (equivalent to 10% opacity)
                     spreadRadius: 2,
                     blurRadius: 6,

@@ -44,10 +44,10 @@ class Navbar extends StatelessWidget {
                   const TextStyle(fontWeight: FontWeight.w400),
               enableFeedback: false,
               items: [
-                _buildNavItem('Home', 'assets/icons/HomeIcon4.svg', 0),
+                _buildNavItem('Home', 'assets/icons/HomeIcon3.svg', 0),
                 _buildNavItem('Workouts', 'assets/icons/Workout Icon.svg', 1),
                 _buildNavItem('Planners', 'assets/icons/PlannerIcon2.svg', 2),
-                _buildNavItem('Profile', 'assets/icons/ProfileIcon1.svg', 3),
+                _buildNavItem('Settings', 'assets/icons/SettingsIcon2.svg', 3),
               ],
             ),
           ),

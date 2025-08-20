@@ -9,8 +9,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'CalistherX',
+      debugShowCheckedModeBanner: true,
+      title: 'CalistherPal',
       theme: ThemeData.dark(),
       home: const MainNavigator(), // Changed to MainNavigator
     );
