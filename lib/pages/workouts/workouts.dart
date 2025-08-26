@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'purposes/endurance/level/endurance_lvl.dart';
 import 'purposes/hypertrophy/level/hypertrophy_lvl.dart';
 import 'purposes/strength/level/strength_lvl.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+// import 'package:flutter_svg/flutter_svg.dart';
 import '../../pages/Profile/profile.dart';
 
 class WorkoutsPage extends StatelessWidget {
@@ -49,7 +49,7 @@ class WorkoutsPage extends StatelessWidget {
     ];
 
     return Scaffold(
-      backgroundColor: const Color(0xFFFFFFFF),
+      backgroundColor: const Color(0xFFECE6EF),
       appBar: AppBar(
         title: const Text(
           'Workout Programs',
@@ -60,7 +60,7 @@ class WorkoutsPage extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        backgroundColor: const Color(0xFFFFFFFF),
+        backgroundColor: const Color(0xFFECE6EF),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 9.0),
@@ -75,14 +75,15 @@ class WorkoutsPage extends StatelessWidget {
                   ),
                 );
               },
-              child: CircleAvatar(
-                radius: 18,
-                backgroundColor: Colors.white,
-                child: SvgPicture.asset(
-                  'assets/icons/ProfileIcon1.svg',
-                  width: 30,
-                  height: 30,
-                  color: Colors.black54,
+              child: Material(
+                shape: const CircleBorder(),
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                child: Image.asset(
+                  'assets/icons/saitama-profile-pic.png',
+                  width: 36,
+                  height: 36,
+                  fit: BoxFit.cover,
+                  filterQuality: FilterQuality.high,
                 ),
               ),
             ),
@@ -90,14 +91,14 @@ class WorkoutsPage extends StatelessWidget {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(11.0),
+        padding: const EdgeInsets.fromLTRB(11.0, 11, 11, 11),
         child: Column(
           children: [
             Expanded(
               child: ListView.separated(
                 itemCount: workoutTypes.length,
                 separatorBuilder: (context, index) =>
-                    const SizedBox(height: 15),
+                    const SizedBox(height: 12),
                 itemBuilder: (context, index) {
                   final workout = workoutTypes[index];
                   return MouseRegion(
@@ -107,12 +108,17 @@ class WorkoutsPage extends StatelessWidget {
                         if (workout['route'] != null) {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) => workout['route'],
+                            PageRouteBuilder(
+                              pageBuilder:
+                                  (context, animation, secondaryAnimation) =>
+                                      workout['route'],
+                              transitionDuration:
+                                  Duration.zero, // no transition
+                              reverseTransitionDuration:
+                                  Duration.zero, // no back transition
                             ),
                           );
                         } else {
-                          // You can show a snackbar or placeholder for now
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
@@ -121,19 +127,27 @@ class WorkoutsPage extends StatelessWidget {
                           );
                         }
                       },
-                      child: Card(
-                        color: const Color(0xFFF8F8F8),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFFFFFFF),
+                          borderRadius: BorderRadius.circular(25),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              blurRadius: 5,
+                              spreadRadius: 0,
+                              offset: const Offset(0, 1),
+                            ),
+                          ],
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.all(16.0),
+                          padding: const EdgeInsets.all(14.0),
                           child: Row(
                             children: [
                               Container(
-                                padding: const EdgeInsets.all(15),
+                                padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
-                                  color: workout['color'].withOpacity(0.2),
+                                  color: workout['color'].withOpacity(0.15),
                                   shape: BoxShape.circle,
                                 ),
                                 child: Icon(
@@ -151,9 +165,9 @@ class WorkoutsPage extends StatelessWidget {
                                       workout['title'],
                                       style: const TextStyle(
                                         color: Colors.black,
-                                        fontSize: 16,
+                                        fontSize: 14,
                                         fontWeight: FontWeight.bold,
-                                        fontFamily: 'OpenSans',
+                                        fontFamily: 'SF-Pro-Display-Thin',
                                       ),
                                     ),
                                     const SizedBox(height: 4),
@@ -161,8 +175,8 @@ class WorkoutsPage extends StatelessWidget {
                                       workout['subtitle'],
                                       style: const TextStyle(
                                         color: Colors.black87,
-                                        fontSize: 13,
-                                        fontFamily: 'OpenSans',
+                                        fontSize: 12,
+                                        fontFamily: 'SF-Pro-Display-Thin',
                                       ),
                                     ),
                                   ],
@@ -170,7 +184,7 @@ class WorkoutsPage extends StatelessWidget {
                               ),
                               const Icon(
                                 Icons.arrow_forward_ios,
-                                color: Colors.black,
+                                color: Colors.black54,
                                 size: 20,
                               ),
                             ],

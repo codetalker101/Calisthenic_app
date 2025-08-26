@@ -34,115 +34,135 @@ class HypertrophyLevelPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFFFFF),
+      backgroundColor: const Color(0xFFECE6EF),
       appBar: AppBar(
-        title: const Text(
-          'Hypertrophy Training',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'AudioLinkMono',
-            color: Colors.black,
-          ),
-        ),
-        backgroundColor: const Color(0xFFFFFFFF),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(11.0),
-          child: Column(
-            children: [
-              const SizedBox(height: 0),
-              ListView.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: levels.length,
-                separatorBuilder: (context, index) =>
-                    const SizedBox(height: 20),
-                itemBuilder: (context, index) {
-                  final level = levels[index];
-                  return _buildLevelCard(level);
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildLevelCard(Map<String, dynamic> level) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
-      elevation: 4,
-      child: Container(
-        height: 130,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          image: DecorationImage(
-            image: AssetImage(level['image']),
-            fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(
-              Colors.black.withOpacity(0.5),
-              BlendMode.darken,
-            ),
-          ),
-        ),
-        child: ListTile(
-          contentPadding: const EdgeInsets.all(15),
-          leading: Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.green,
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              level['icon'],
-              color: Colors.green[200],
-              size: 28,
-            ),
-          ),
-          title: Text(
-            level['title'],
-            style: const TextStyle(
-              color: Colors.white,
+        title: Container(
+          width: double.infinity,
+          alignment: Alignment.centerRight,
+          child: const Text(
+            'Hypertrophy Training',
+            style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              fontFamily: 'OpenSans',
-              shadows: [
-                Shadow(
-                  blurRadius: 6,
-                  color: Colors.black87,
-                  offset: Offset(1, 1),
-                ),
-              ],
+              fontFamily: 'AudioLinkMono',
+              color: Colors.black,
             ),
           ),
-          subtitle: Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: Text(
-              level['subtitle'],
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 13,
-                fontFamily: 'OpenSans',
-                shadows: [
-                  Shadow(
-                    blurRadius: 4,
-                    color: Colors.black87,
-                    offset: Offset(1, 1),
-                  )
-                ],
-              ),
+        ),
+        backgroundColor: const Color(0xFFECE6EF),
+        iconTheme: const IconThemeData(
+          color: Colors.black, // Change back button color to black
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(height: 10),
+            // Build level cards with same style as meal cards
+            Column(
+              children: List.generate(levels.length, (index) {
+                final level = levels[index];
+
+                // Level card
+                return Material(
+                  elevation: 0,
+                  borderRadius: BorderRadius.circular(25),
+                  color: Colors.transparent,
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  child: Container(
+                    height: 100,
+                    width: 290,
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(25),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        // Left side → level image with fixed padding
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Material(
+                            borderRadius: BorderRadius.circular(25),
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            child: Image.asset(
+                              level['image'],
+                              width: 80,
+                              height: 80,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        // Right side → level details
+                        Expanded(
+                          child: LayoutBuilder(
+                            builder: (context, constraints) {
+                              // Calculate padding values similar to meal card
+                              double topPadding = constraints.maxHeight * 0.23;
+                              double bottomPadding = constraints.maxHeight * 0;
+                              double leftPadding = constraints.maxWidth * 0.04;
+                              double rightPadding = constraints.maxWidth * 0.04;
+
+                              return Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                  leftPadding,
+                                  topPadding,
+                                  rightPadding,
+                                  bottomPadding,
+                                ),
+                                child: SizedBox(
+                                  height: constraints.maxHeight -
+                                      (topPadding + bottomPadding),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        level['title'],
+                                        style: const TextStyle(
+                                          color: Color(0xFF9B2354),
+                                          fontSize: 13,
+                                          fontFamily: "SF-Pro-Display-Thin",
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          level['subtitle'],
+                                          style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 11,
+                                            fontFamily: "SF-Pro-Display-Thin",
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }),
             ),
-          ),
-          trailing: Icon(
-            Icons.arrow_forward_ios,
-            color: Colors.green[200],
-            size: 22,
-          ),
+          ],
         ),
       ),
     );

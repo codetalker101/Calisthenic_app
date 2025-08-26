@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'dart:async';
-import 'package:flutter_svg/flutter_svg.dart';
+// import 'package:flutter_svg/flutter_svg.dart';
 import '../pages/Profile/profile.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,6 +16,8 @@ class _HomePageState extends State<HomePage> {
   DateTime _focusedDate = DateTime.now();
   final ScrollController _scrollController = ScrollController();
   Timer? _dateCheckTimer;
+
+  double _appBarElevation = 0.0; // 👈 store AppBar shadow value
 
   @override
   void initState() {
@@ -44,6 +46,11 @@ class _HomePageState extends State<HomePage> {
         _focusedDate = newDate;
       });
     }
+
+    // 👇 Add this: shadow appears when scrolled
+    setState(() {
+      _appBarElevation = position.pixels > 0 ? 4.0 : 0.0;
+    });
   }
 
   // meals card background by it's type
@@ -72,9 +79,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFFFFF),
+      backgroundColor: const Color(0xFFECE6EF),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFFFFFFF),
+        backgroundColor: const Color(0xFFECE6EF),
+        elevation: _appBarElevation,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const [
@@ -82,7 +90,7 @@ class _HomePageState extends State<HomePage> {
               'CalistherPAL',
               style: TextStyle(
                 fontSize: 18,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w800,
                 fontFamily: 'AudioLinkMono',
                 color: Colors.black,
               ),
@@ -91,10 +99,10 @@ class _HomePageState extends State<HomePage> {
             Text(
               'Welcome back, Malik 👋',
               style: TextStyle(
-                fontSize: 11,
-                fontWeight: FontWeight.w400,
-                color: Colors.black87,
-              ),
+                  fontSize: 10,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black87,
+                  fontFamily: "SF-Pro-Display-Thin"),
             ),
           ],
         ),
@@ -112,14 +120,15 @@ class _HomePageState extends State<HomePage> {
                   ),
                 );
               },
-              child: CircleAvatar(
-                radius: 18,
-                backgroundColor: Colors.white,
-                child: SvgPicture.asset(
-                  'assets/icons/ProfileIcon1.svg',
-                  width: 30,
-                  height: 30,
-                  color: Colors.black54,
+              child: Material(
+                shape: const CircleBorder(),
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                child: Image.asset(
+                  'assets/icons/saitama-profile-pic.png',
+                  width: 36,
+                  height: 36,
+                  fit: BoxFit.cover,
+                  filterQuality: FilterQuality.high,
                 ),
               ),
             ),
@@ -129,364 +138,436 @@ class _HomePageState extends State<HomePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Compact Calendar Container
-            Container(
-              height: 100,
-              margin: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: const Color(0xFFF8F8F8),
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withAlpha((0.2 * 255)
-                        .toInt()), // replaced withOpacity (equivalent to 10% opacity)
-                    spreadRadius: 2,
-                    blurRadius: 6,
-                    offset: const Offset(0, 3),
-                  ),
-                ],
-              ),
-              child: Column(
-                children: [
-                  // Month-Year Header
-                  Padding(
-                    padding: const EdgeInsets.only(top: 12, bottom: 8),
-                    child: Text(
-                      DateFormat('MMMM yyyy').format(_focusedDate),
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
+            // Compact Calender Container
+            Material(
+              elevation: 0, // keep ripple effect smooth
+              borderRadius: BorderRadius.circular(25),
+              color: Colors.transparent,
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              child: Container(
+                height: 100,
+                margin: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFFFFFFF),
+                  borderRadius: BorderRadius.circular(25),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1), // soft black shadow
+                      blurRadius: 10, // soften edges
+                      spreadRadius: 0, // how much it spreads
+                      offset: const Offset(0, 1), // vertical offset (downward)
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    // Month-Year Header
+                    Padding(
+                      padding: const EdgeInsets.only(top: 12, bottom: 8),
+                      child: Text(
+                        DateFormat('MMMM yyyy').format(_focusedDate),
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: "SF-Pro-Display-Thin",
+                        ),
                       ),
                     ),
-                  ),
 
-                  // Scrollable Dates Row
-                  Expanded(
-                    child: Container(
-                      color: Colors.transparent,
-                      child: ListView.builder(
-                        controller: _scrollController,
-                        scrollDirection: Axis.horizontal,
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        itemCount: 365, // Show 1 year's worth of dates
-                        itemBuilder: (context, index) {
-                          final date =
-                              DateTime.now().add(Duration(days: index));
-                          final isSelected = _selectedDate.day == date.day &&
-                              _selectedDate.month == date.month &&
-                              _selectedDate.year == date.year;
+                    // Scrollable Dates Row
+                    Expanded(
+                      child: Container(
+                        color: Colors.transparent,
+                        child: ListView.builder(
+                          controller: _scrollController,
+                          scrollDirection: Axis.horizontal,
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          itemCount: 365,
+                          itemBuilder: (context, index) {
+                            final date =
+                                DateTime.now().add(Duration(days: index));
+                            final isSelected = _selectedDate.day == date.day &&
+                                _selectedDate.month == date.month &&
+                                _selectedDate.year == date.year;
 
-                          return GestureDetector(
-                            onTap: () => setState(() {
-                              _selectedDate = date;
-                              _focusedDate = date;
-                            }),
-                            child: Container(
-                              width: 50,
-                              margin: const EdgeInsets.symmetric(horizontal: 4),
-                              decoration: BoxDecoration(
-                                color: isSelected
-                                    ? Colors.green
-                                    : Colors.transparent,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    DateFormat('E').format(date)[0],
-                                    style: TextStyle(
-                                      color: isSelected
-                                          ? Colors.white
-                                          : Colors.black54,
-                                      fontSize: 12,
+                            return GestureDetector(
+                              onTap: () => setState(() {
+                                _selectedDate = date;
+                                _focusedDate = date;
+                              }),
+                              child: Container(
+                                width: 50,
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 4),
+                                decoration: BoxDecoration(
+                                  color: isSelected
+                                      ? const Color(0xFF9B2354)
+                                      : Colors.transparent,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      DateFormat('E').format(date)[0],
+                                      style: TextStyle(
+                                        color: isSelected
+                                            ? Colors.white
+                                            : Colors.black54,
+                                        fontSize: 12,
+                                        fontFamily: "SF-Pro-Display-Thin",
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    date.day.toString(),
-                                    style: TextStyle(
-                                      color: isSelected
-                                          ? Colors.white
-                                          : Colors.black54,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      date.day.toString(),
+                                      style: TextStyle(
+                                        color: isSelected
+                                            ? Colors.white
+                                            : Colors.black54,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: "SF-Pro-Display-Thin",
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
 
             // Workout Chart Section
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Workout Chart Label
-                  const Text(
-                    'Workout Chart',
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Workout Chart Label
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 14),
+                  child: Text(
+                    'Planned Workouts',
                     style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF9B2354),
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      fontFamily: "SF-Pro-Display-Thin",
                     ),
                   ),
-                  const SizedBox(height: 4),
+                ),
+                const SizedBox(height: 0),
 
-                  // Date Sub Label
-                  Text(
-                    '# ${DateFormat('EEEE').format(_focusedDate)} Workout Plans',
-                    style: TextStyle(
+                // Date Sub Label
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 14),
+                  child: Text(
+                    '# ${DateFormat('EEEE').format(_focusedDate)}s Workouts',
+                    style: const TextStyle(
                       color: Colors.black,
-                      fontSize: 14,
+                      fontSize: 12,
+                      fontFamily: "SF-Pro-Display-Thin",
                     ),
                   ),
-                  const SizedBox(height: 10),
+                ),
+                const SizedBox(height: 10),
 
-                  // Horizontal Workout Cards
-                  SizedBox(
-                    height: 160,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 4,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          width: 200,
-                          margin: const EdgeInsets.only(right: 15),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              image: DecorationImage(
-                                image: AssetImage('assets/images/muscleUp.jpg'),
-                                fit: BoxFit.cover,
-                                colorFilter: ColorFilter.mode(
-                                    Colors.black.withAlpha((0.4 * 255).toInt()),
-                                    BlendMode.darken),
-                              )),
-                          child: Stack(
-                            children: [
-                              // content
-                              Padding(
-                                padding: const EdgeInsets.all(15),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Strength Training',
-                                      style: const TextStyle(
-                                        color: Colors.greenAccent,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(
-                                      '60 mins',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 12),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          top:
-                                              45), // Adjust this value as needed
-                                      child: LinearProgressIndicator(
-                                        value: 0.4,
-                                        backgroundColor: Colors.grey[700],
-                                        valueColor:
-                                            const AlwaysStoppedAnimation<Color>(
-                                                Colors.green),
-                                      ),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Text(
-                                      '40% Completed',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            ],
+                // Horizontal Workout Cards
+                SizedBox(
+                  height: 120,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 4,
+                    itemBuilder: (context, index) {
+                      return Material(
+                        elevation: 0, // soft elevation for shadow
+                        borderRadius: BorderRadius.circular(25),
+                        color: Colors.transparent,
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        child: Container(
+                          width: 160,
+                          margin: EdgeInsets.only(
+                            left: index == 0 ? 14 : 4, //spacing between cards
+                            right: index == 3 ? 20 : 8,
                           ),
-                        );
-                      },
-                    ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            image: const DecorationImage(
+                              image: AssetImage('assets/images/muscleUp.jpg'),
+                              fit: BoxFit.cover,
+                              colorFilter: ColorFilter.mode(
+                                Colors.black54,
+                                BlendMode.darken,
+                              ),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Strength Training',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: "SF-Pro-Display-Thin",
+                                  ),
+                                ),
+                                const Text(
+                                  '60 mins',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 11,
+                                    fontFamily: "SF-Pro-Display-Thin",
+                                  ),
+                                ),
+                                const Spacer(),
+                                LinearProgressIndicator(
+                                  value: 0.4,
+                                  backgroundColor: Colors.grey[600],
+                                  valueColor:
+                                      const AlwaysStoppedAnimation<Color>(
+                                    Color(0xFF9B2354),
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                const Text(
+                                  '40% Completed',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 10,
+                                    fontFamily: "SF-Pro-Display-Thin",
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
 
             // Meal Planner Section
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Meal Planner',
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(14, 10, 20, 0),
+                  child: Text(
+                    'Planned Meals',
                     style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
+                      color: Color(0xFF9B2354),
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
+                      fontFamily: "SF-Pro-Display-Thin",
                     ),
                   ),
-                  const SizedBox(height: 4),
-                  Text(
-                    '# ${DateFormat('EEEE').format(_focusedDate)} Meals Plans',
-                    style: TextStyle(
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 14),
+                  child: Text(
+                    '# ${DateFormat('EEEE').format(_focusedDate)}s Meals',
+                    style: const TextStyle(
                       color: Colors.black,
-                      fontSize: 14,
+                      fontSize: 12,
+                      fontFamily: "SF-Pro-Display-Thin",
                     ),
                   ),
-                  const SizedBox(height: 10),
-                  SizedBox(
-                    height: 190,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 4,
-                      itemBuilder: (context, index) {
-                        final meals = [
-                          {
-                            'type': 'Breakfast',
-                            'name': 'Banana Toast with Whey Protein',
-                            'calories': '450 kcal',
-                            'ingredients':
-                                'Whole grain bread, banana, whey protein, milk'
-                          },
-                          {
-                            'type': 'Lunch',
-                            'name': 'Grilled Chicken',
-                            'calories': '600 kcal',
-                            'ingredients':
-                                'Chicken breast, Mixed vegetables, Brown rice, Olive oil, Garlic, Herbs'
-                          },
-                          {
-                            'type': 'Snack',
-                            'name': 'L-men Protein Bar',
-                            'calories': '250 kcal',
-                            'ingredients':
-                                'Oat, Whey protein powder, Chocolate, and more'
-                          },
-                          {
-                            'type': 'Dinner',
-                            'name': 'Salmon Bowl',
-                            'calories': '550 kcal',
-                            'ingredients':
-                                'Grilled salmon, Quinoa, Kale, Cherry tomatoes, Cucumber, Lemon dressing'
-                          },
-                        ];
+                ),
+                const SizedBox(height: 10),
 
-                        return Container(
-                          width: 200,
-                          margin: const EdgeInsets.only(right: 15),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            image: DecorationImage(
-                              image: AssetImage(
-                                  _getMealImage(meals[index]['type']!)),
-                              fit: BoxFit.cover,
-                              colorFilter: ColorFilter.mode(
-                                  Colors.black.withAlpha((0.5 * 255).toInt()),
-                                  BlendMode.darken),
+                // Directly build 4 cards (no vertical scroll)
+                Column(
+                  children: List.generate(4, (index) {
+                    final meals = [
+                      {
+                        'type': 'Breakfast',
+                        'name': 'Banana Toast with whey protein',
+                        'calories': '450 kcal',
+                        'protein': '55g',
+                      },
+                      {
+                        'type': 'Lunch',
+                        'name': 'Grilled Chicken',
+                        'calories': '600 kcal',
+                        'protein': '55g',
+                      },
+                      {
+                        'type': 'Snack',
+                        'name': 'L-men Protein Bar',
+                        'calories': '250 kcal',
+                        'protein': '55g',
+                      },
+                      {
+                        'type': 'Dinner',
+                        'name': 'Salmon Bowl',
+                        'calories': '550 kcal',
+                        'protein': '55g',
+                      },
+                    ];
+
+                    // Truncate meal name if longer than 25 characters
+                    String mealName = meals[index]['name']!;
+                    if (mealName.length > 25) {
+                      mealName = '${mealName.substring(0, 25)}...';
+                    }
+
+                    // meals planner card
+                    return Material(
+                      elevation: 0,
+                      borderRadius: BorderRadius.circular(25),
+                      color: Colors.transparent,
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      child: Container(
+                        height: 100,
+                        width: 290,
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 14, vertical: 5),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(25),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              blurRadius: 8,
+                              offset: const Offset(0, 4),
                             ),
-                          ),
-                          child: Stack(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(15),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    // Meal Type
-                                    Text(
-                                      meals[index]['type']!,
-                                      style: TextStyle(
-                                        color: Colors.greenAccent,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    const SizedBox(height: 4),
-
-                                    // Meal Name
-                                    Text(
-                                      meals[index]['name']!,
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    const SizedBox(height: 8),
-
-                                    // Ingredients
-                                    Expanded(
-                                      child: Text(
-                                        meals[index]['ingredients']!,
-                                        style: TextStyle(
-                                          color: Colors.grey[300],
-                                          fontSize: 12,
-                                        ),
-                                        maxLines: 3,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-
-                                    // Calories and Add Button
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Flexible(
-                                          child: Text(
-                                            meals[index]['calories']!,
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 12,
-                                            ),
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                        IconButton(
-                                          icon: Icon(Icons.add_circle,
-                                              color: Colors.greenAccent,
-                                              size: 20),
-                                          padding: EdgeInsets.zero,
-                                          constraints: const BoxConstraints(),
-                                          onPressed: () {},
-                                        )
-                                      ],
-                                    ),
-                                  ],
+                          ],
+                        ),
+                        child: Row(
+                          children: [
+                            // Left side → meal image with fixed padding
+                            Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Material(
+                                borderRadius: BorderRadius.circular(25),
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                child: Image.asset(
+                                  _getMealImage(meals[index]['type']!),
+                                  width: 80,
+                                  height: 80,
+                                  fit: BoxFit.cover,
                                 ),
                               ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
+                            ),
+                            // Right side → meal details
+                            Expanded(
+                              child: LayoutBuilder(
+                                builder: (context, constraints) {
+                                  // Calculate padding values
+                                  double topPadding =
+                                      constraints.maxHeight * 0.12;
+                                  double bottomPadding =
+                                      constraints.maxHeight * 0;
+                                  double leftPadding =
+                                      constraints.maxWidth * 0.04;
+                                  double rightPadding =
+                                      constraints.maxWidth * 0.04;
+
+                                  return Padding(
+                                    padding: EdgeInsets.fromLTRB(
+                                      leftPadding,
+                                      topPadding,
+                                      rightPadding,
+                                      bottomPadding,
+                                    ),
+                                    child: SizedBox(
+                                      height: constraints.maxHeight -
+                                          (topPadding + bottomPadding),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            meals[index]['type']!,
+                                            style: const TextStyle(
+                                              color: Color(0xFF9B2354),
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              mealName, // Use the truncated name
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 11,
+                                                fontWeight: FontWeight.w500,
+                                              ),
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 8.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                // Updated this part to include protein
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      meals[index]['calories']!,
+                                                      style: const TextStyle(
+                                                        color: Colors.grey,
+                                                        fontSize: 10,
+                                                      ),
+                                                    ),
+                                                    const SizedBox(width: 10),
+                                                    Text(
+                                                      '${meals[index]['protein']} protein',
+                                                      style: const TextStyle(
+                                                        color: Colors.grey,
+                                                        fontSize: 10,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                IconButton(
+                                                  icon: const Icon(
+                                                    Icons.more_vert,
+                                                    color: Color(0xFF9B2354),
+                                                    size: 20,
+                                                  ),
+                                                  padding: EdgeInsets.zero,
+                                                  constraints:
+                                                      const BoxConstraints(),
+                                                  onPressed: () {},
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
+                ),
+              ],
+            )
           ],
         ),
       ),

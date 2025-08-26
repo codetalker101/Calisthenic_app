@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../includes/_sidebar.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+// import 'package:flutter_svg/flutter_svg.dart';
 import '../../pages/Profile/profile.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -33,7 +33,7 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFFFFF),
+      backgroundColor: const Color(0xFFECE6EF),
       appBar: AppBar(
         title: const Text(
           'Settings',
@@ -44,7 +44,7 @@ class SettingsPage extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        backgroundColor: const Color(0xFFFFFFFF),
+        backgroundColor: const Color(0xFFECE6EF),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 9.0),
@@ -59,14 +59,15 @@ class SettingsPage extends StatelessWidget {
                   ),
                 );
               },
-              child: CircleAvatar(
-                radius: 18,
-                backgroundColor: Colors.white,
-                child: SvgPicture.asset(
-                  'assets/icons/ProfileIcon1.svg',
-                  width: 30,
-                  height: 30,
-                  color: Colors.black54,
+              child: Material(
+                shape: const CircleBorder(),
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                child: Image.asset(
+                  'assets/icons/saitama-profile-pic.png',
+                  width: 36,
+                  height: 36,
+                  fit: BoxFit.cover,
+                  filterQuality: FilterQuality.high,
                 ),
               ),
             ),
