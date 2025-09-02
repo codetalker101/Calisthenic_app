@@ -45,7 +45,10 @@ dependencies:
   syncfusion_flutter_gauges: ^30.2.7
   flutter_neat_and_clean_calendar: ^0.4.16
   draggable_bottom_sheet: ^1.0.2
+<<<<<<< HEAD
   percent_indicator: ^4.2.5
+=======
+>>>>>>> 7ec9a1dce6069503155c2a34b6f07f8ff4cd1c9a
 
 dev_dependencies:
   flutter_test:
