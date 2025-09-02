@@ -8,8 +8,8 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  double height = 190; // cm
-  double weight = 88; // kg
+  double height = 179; // cm
+  double weight = 64; // kg
 
   // Protein/day recommendation = 2.5 g per kg
   double get protein => weight * 2.5;

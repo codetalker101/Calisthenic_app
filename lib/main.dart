@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'navigation/main_navigator.dart'; // Add this import
+// import 'navigation/main_navigator.dart'; // Add this import
+import 'pages/auth/login.dart';
 
 void main() => runApp(const MyApp());
 
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: true,
       title: 'CalistherPal',
       theme: ThemeData.dark(),
-      home: const MainNavigator(), // Changed to MainNavigator
+      home: const LoginPage(), // Changed to MainNavigator
     );
   }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../pages/home.dart';
 import '../pages/workouts/workouts.dart';
-import '../pages/planners/planners.dart';
-import '../pages/settings/setting.dart';
+import '../pages/meals/meals.dart';
+import '../pages/progress/progress.dart';
 import '../pages/includes/_navbar.dart';
 
 class MainNavigator extends StatefulWidget {
@@ -58,18 +58,18 @@ class _MainNavigatorState extends State<MainNavigator> {
               builder: (context) => const WorkoutsPage(),
             ),
           ),
-          // Planners Tab Navigator
+          // Meals Tab Navigator
           Navigator(
             key: _navKeys[2],
             onGenerateRoute: (route) => MaterialPageRoute(
-              builder: (context) => const PlannersPage(),
+              builder: (context) => const MealsPage(),
             ),
           ),
-          // Settings Tab Navigator
+          // Progress Tab Navigator
           Navigator(
             key: _navKeys[3],
             onGenerateRoute: (route) => MaterialPageRoute(
-              builder: (context) => const SettingsPage(),
+              builder: (context) => const ProgressPage(),
             ),
           ),
         ],
