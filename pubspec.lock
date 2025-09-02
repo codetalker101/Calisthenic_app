@@ -251,7 +251,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
-<<<<<<< HEAD
   percent_indicator:
     dependency: "direct main"
     description:
@@ -260,8 +259,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.2.5"
-=======
->>>>>>> 7ec9a1dce6069503155c2a34b6f07f8ff4cd1c9a
   petitparser:
     dependency: transitive
     description:
