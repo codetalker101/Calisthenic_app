@@ -1,0 +1,2 @@
+/Users/janghyun/Documents/Flutter-projects/calisthenics_app/android/app/.cxx/Debug/6j23a3i2/x86_64/CMakeFiles/edit_cache.dir
+/Users/janghyun/Documents/Flutter-projects/calisthenics_app/android/app/.cxx/Debug/6j23a3i2/x86_64/CMakeFiles/rebuild_cache.dir
