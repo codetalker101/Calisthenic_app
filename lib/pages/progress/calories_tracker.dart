@@ -79,16 +79,6 @@ class CaloriesBurnedPage extends StatelessWidget {
                     color: Colors.black,
                   ),
                 ),
-                const SizedBox(height: 8),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: LinearProgressIndicator(
-                    value: progress,
-                    minHeight: 10,
-                    backgroundColor: Colors.grey[400],
-                    valueColor: const AlwaysStoppedAnimation(Color(0xFF9B2354)),
-                  ),
-                ),
               ],
             ),
 

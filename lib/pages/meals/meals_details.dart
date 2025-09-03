@@ -48,6 +48,7 @@ class _MealDetailPageState extends State<MealDetailPage> {
           child: CircleAvatar(
             backgroundColor: const Color(0xFFECE6EF), // 👈 circle color
             child: IconButton(
+              enableFeedback: false, // no click sound
               icon: const Icon(
                 Icons.arrow_back,
                 color: Colors.black, // 👈 arrow color

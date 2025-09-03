@@ -40,7 +40,7 @@ class Navbar extends StatelessWidget {
               unselectedLabelStyle: const TextStyle(
                   fontWeight: FontWeight.w400,
                   fontFamily: "SF-Pro-Display-Thin"),
-              enableFeedback: true, // enables haptic & splash feedback
+              enableFeedback: false, // enables haptic & splash feedback
               items: [
                 _buildNavItem('Home', 'assets/icons/HomeIcon3.svg', 0),
                 _buildNavItem('Workouts', 'assets/icons/Workout Icon.svg', 1),

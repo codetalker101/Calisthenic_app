@@ -64,7 +64,7 @@ class _MealsPageState extends State<MealsPage> {
         title: const Text(
           'Meals',
           style: TextStyle(
-            fontSize: 20,
+            fontSize: 25,
             fontWeight: FontWeight.bold,
             fontFamily: 'AudioLinkMono',
             color: Colors.black,
@@ -266,6 +266,7 @@ class _MealsPageState extends State<MealsPage> {
                                     ],
                                   ),
                                   IconButton(
+                                    enableFeedback: false, // no click sound
                                     icon: const Icon(
                                       Icons.more_vert,
                                       color: Color(0xFF9B2354),

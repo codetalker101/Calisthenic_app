@@ -190,7 +190,7 @@ class _HomePageState extends State<HomePage> {
                               _focusedDate = date;
                             }),
                             child: Container(
-                              width: screenWidth * 0.12,
+                              width: screenWidth * 0.115,
                               margin: const EdgeInsets.symmetric(horizontal: 4),
                               decoration: BoxDecoration(
                                 color: isSelected

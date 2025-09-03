@@ -20,7 +20,7 @@ class ProgressPage extends StatelessWidget {
         title: const Text(
           'Progress',
           style: TextStyle(
-            fontSize: 20,
+            fontSize: 25,
             fontWeight: FontWeight.bold,
             fontFamily: 'AudioLinkMono',
             color: Colors.black,

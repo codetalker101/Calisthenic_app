@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'workouts_start.dart';
 
 class WorkoutDetailPage extends StatefulWidget {
   final String title;
@@ -38,6 +39,7 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
             backgroundColor:
                 const Color(0xFFECE6EF), // circle color behind backbutton
             child: IconButton(
+              enableFeedback: false, // no click sound
               icon: const Icon(
                 Icons.arrow_back,
                 color: Colors.black, // arrow color
@@ -339,7 +341,28 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                   borderRadius: BorderRadius.circular(
                       30), // makes ripple match the button shape
                   onTap: () {
-                    print("Start workout!");
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => WorkoutStartPage(
+                          title: widget.title,
+                          videoUrl:
+                              "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4", // replace with your real workout video
+                          description:
+                              "A comprehensive full-body workout designed to improve strength, endurance, and flexibility. Perfect for all fitness levels.",
+                          difficulty: "Intermediate",
+                          duration: 300, // in seconds (example: 5 minutes)
+                          calories: 300,
+                          steps: [
+                            "Warm up with jumping jacks (1 min)",
+                            "Push-ups (30 reps)",
+                            "Squats (20 reps)",
+                            "Plank (60 seconds)",
+                            "Cool down stretches (2 mins)",
+                          ],
+                        ),
+                      ),
+                    );
                   },
                   child: Container(
                     height: screenHeight * 0.05,

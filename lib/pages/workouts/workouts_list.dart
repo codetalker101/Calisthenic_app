@@ -41,7 +41,12 @@ class WorkoutsListPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: const Color(0xFFECE6EF),
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.black),
+        // back button
+        leading: IconButton(
+          enableFeedback: false, // no click sound
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.pop(context),
+        ),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: const [
