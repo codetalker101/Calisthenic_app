@@ -21,9 +21,23 @@ class _SleepTrackerPageState extends State<SleepTrackerPage> {
     return Scaffold(
       backgroundColor: const Color(0xFFECE6EF),
       appBar: AppBar(
-        title: const Text("Sleep Tracker"),
-        centerTitle: true,
-        backgroundColor: const Color(0xFF763EB0),
+        backgroundColor: const Color(0xFFECE6EF),
+        elevation: 0,
+        scrolledUnderElevation: 1,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: const [
+            Text(
+              'Sleep tracker',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'AudioLinkMono',
+                color: Colors.black,
+              ),
+            ),
+          ],
+        ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),

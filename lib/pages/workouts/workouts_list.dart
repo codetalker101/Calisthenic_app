@@ -41,6 +41,7 @@ class WorkoutsListPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: const Color(0xFFECE6EF),
         elevation: 0,
+        scrolledUnderElevation: 1,
         // back button
         leading: IconButton(
           enableFeedback: false, // no click sound
@@ -51,9 +52,9 @@ class WorkoutsListPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: const [
             Text(
-              'Workout List',
+              'Workout list',
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 25,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'AudioLinkMono',
                 color: Colors.black,

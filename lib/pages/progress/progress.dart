@@ -1,6 +1,8 @@
 import 'package:calisthenics_app/pages/progress/calories_tracker.dart';
+import 'package:calisthenics_app/pages/progress/logs_activities.dart';
 import 'package:calisthenics_app/pages/progress/sleep_tracker.dart';
 import 'package:calisthenics_app/pages/progress/water_tracker.dart';
+import 'package:calisthenics_app/pages/progress/workout_tracker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neat_and_clean_calendar/flutter_neat_and_clean_calendar.dart';
 import '../../pages/profile/profile.dart';
@@ -119,7 +121,7 @@ class ProgressPage extends StatelessWidget {
                             multiDayEndText: 'End',
                             expandableDateFormat: 'EEEE, dd MMMM yyyy',
                             datePickerType: DatePickerType.date,
-                            showEventListViewIcon: false,
+                            showEventListViewIcon: true,
                             dayOfWeekStyle: TextStyle(
                               color: Color(0xFF9B2354),
                               fontWeight: FontWeight.w800,
@@ -141,17 +143,19 @@ class ProgressPage extends StatelessWidget {
 
                 SizedBox(height: screenHeight * 0.001),
 
-                // Macros Nutrients Card
+                // Macro Nutrients Card
                 Material(
                   elevation: 1,
                   borderRadius: BorderRadius.circular(screenWidth * 0.06),
                   color: Colors.transparent,
                   clipBehavior: Clip.antiAliasWithSaveLayer,
                   child: Container(
-                    height: screenHeight * 0.1,
+                    height:
+                        screenHeight * 0.16, // increased height to fit title
                     padding: EdgeInsets.symmetric(
-                        vertical: screenHeight * 0.017,
-                        horizontal: screenWidth * 0.05),
+                      vertical: screenHeight * 0.010,
+                      horizontal: screenWidth * 0.05,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(screenWidth * 0.06),
@@ -163,116 +167,149 @@ class ProgressPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    child: Row(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Protein
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Protein",
-                                style: TextStyle(
-                                  fontSize: screenWidth * 0.03,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black,
-                                ),
+                        // Title at top-left
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              "Macro nutrients",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: "SF-Pro-Display-Thin",
+                                color: Colors.black,
                               ),
-                              SizedBox(height: screenHeight * 0.008),
-                              ClipRRect(
-                                borderRadius:
-                                    BorderRadius.circular(screenWidth * 0.02),
-                                child: LinearProgressIndicator(
-                                  value: 66 / 120,
-                                  minHeight: screenHeight * 0.007,
-                                  backgroundColor: Colors.grey.shade300,
-                                  valueColor:
-                                      const AlwaysStoppedAnimation<Color>(
-                                          Color(0xFF9B2354)),
-                                ),
-                              ),
-                              SizedBox(height: screenHeight * 0.008),
-                              Text(
-                                "66/120 g",
-                                style: TextStyle(
-                                  fontSize: screenWidth * 0.025,
-                                  color: Colors.black54,
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.more_horiz,
+                                  color: Colors.black54),
+                              onPressed: () {},
+                            ),
+                          ],
                         ),
-                        SizedBox(width: screenWidth * 0.03),
-                        // Carbs
+
+                        SizedBox(height: screenHeight * 0.015),
+
+                        // Nutrients Row
                         Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          child: Row(
                             children: [
-                              Text(
-                                "Carbs",
-                                style: TextStyle(
-                                  fontSize: screenWidth * 0.03,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black,
+                              // Protein
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Protein",
+                                      style: TextStyle(
+                                        fontSize: screenWidth * 0.03,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    SizedBox(height: screenHeight * 0.008),
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(
+                                          screenWidth * 0.02),
+                                      child: LinearProgressIndicator(
+                                        value: 66 / 120,
+                                        minHeight: screenHeight * 0.007,
+                                        backgroundColor: Colors.grey.shade300,
+                                        valueColor:
+                                            const AlwaysStoppedAnimation<Color>(
+                                                Color(0xFF9B2354)),
+                                      ),
+                                    ),
+                                    SizedBox(height: screenHeight * 0.008),
+                                    Text(
+                                      "66/120 g",
+                                      style: TextStyle(
+                                        fontSize: screenWidth * 0.025,
+                                        color: Colors.black54,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              SizedBox(height: screenHeight * 0.008),
-                              ClipRRect(
-                                borderRadius:
-                                    BorderRadius.circular(screenWidth * 0.02),
-                                child: LinearProgressIndicator(
-                                  value: 200 / 300,
-                                  minHeight: screenHeight * 0.007,
-                                  backgroundColor: Colors.grey.shade300,
-                                  valueColor:
-                                      const AlwaysStoppedAnimation<Color>(
-                                          Colors.green),
+                              SizedBox(width: screenWidth * 0.03),
+
+                              // Carbs
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Carbs",
+                                      style: TextStyle(
+                                        fontSize: screenWidth * 0.03,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    SizedBox(height: screenHeight * 0.008),
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(
+                                          screenWidth * 0.02),
+                                      child: LinearProgressIndicator(
+                                        value: 200 / 300,
+                                        minHeight: screenHeight * 0.007,
+                                        backgroundColor: Colors.grey.shade300,
+                                        valueColor:
+                                            const AlwaysStoppedAnimation<Color>(
+                                                Colors.green),
+                                      ),
+                                    ),
+                                    SizedBox(height: screenHeight * 0.008),
+                                    Text(
+                                      "200/300 g",
+                                      style: TextStyle(
+                                        fontSize: screenWidth * 0.025,
+                                        color: Colors.black54,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              SizedBox(height: screenHeight * 0.008),
-                              Text(
-                                "200/300 g",
-                                style: TextStyle(
-                                  fontSize: screenWidth * 0.025,
-                                  color: Colors.black54,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(width: screenWidth * 0.03),
-                        // Fat
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Fat",
-                                style: TextStyle(
-                                  fontSize: screenWidth * 0.03,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              SizedBox(height: screenHeight * 0.008),
-                              ClipRRect(
-                                borderRadius:
-                                    BorderRadius.circular(screenWidth * 0.02),
-                                child: LinearProgressIndicator(
-                                  value: 40 / 70,
-                                  minHeight: screenHeight * 0.007,
-                                  backgroundColor: Colors.grey.shade300,
-                                  valueColor:
-                                      const AlwaysStoppedAnimation<Color>(
-                                          Colors.orange),
-                                ),
-                              ),
-                              SizedBox(height: screenHeight * 0.008),
-                              Text(
-                                "40/70 g",
-                                style: TextStyle(
-                                  fontSize: screenWidth * 0.025,
-                                  color: Colors.black54,
+                              SizedBox(width: screenWidth * 0.03),
+
+                              // Fat
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Fat",
+                                      style: TextStyle(
+                                        fontSize: screenWidth * 0.03,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    SizedBox(height: screenHeight * 0.008),
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(
+                                          screenWidth * 0.02),
+                                      child: LinearProgressIndicator(
+                                        value: 40 / 70,
+                                        minHeight: screenHeight * 0.007,
+                                        backgroundColor: Colors.grey.shade300,
+                                        valueColor:
+                                            const AlwaysStoppedAnimation<Color>(
+                                                Colors.orange),
+                                      ),
+                                    ),
+                                    SizedBox(height: screenHeight * 0.008),
+                                    Text(
+                                      "40/70 g",
+                                      style: TextStyle(
+                                        fontSize: screenWidth * 0.025,
+                                        color: Colors.black54,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
@@ -315,7 +352,7 @@ class ProgressPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text(
-                              "Weight Gain",
+                              "Weight gain",
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
@@ -741,7 +778,14 @@ class ProgressPage extends StatelessWidget {
                                   child: IconButton(
                                     icon: const Icon(Icons.more_horiz,
                                         color: Colors.black54),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.of(context, rootNavigator: true)
+                                          .push(
+                                        MaterialPageRoute(
+                                          builder: (_) => WorkoutTrackerPage(),
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ),
                                 // Horizontally centered, vertically near bottom
@@ -799,7 +843,13 @@ class ProgressPage extends StatelessWidget {
         color: const Color(0xFF9B2354),
         clipBehavior: Clip.antiAliasWithSaveLayer,
         child: InkWell(
-          onTap: () => print("Floating button tapped"),
+          onTap: () {
+            Navigator.of(context, rootNavigator: true).push(
+              MaterialPageRoute(
+                builder: (_) => LogsActivitiesPage(),
+              ),
+            );
+          },
           child: Container(
             width: screenWidth * 0.155,
             height: screenWidth * 0.155,

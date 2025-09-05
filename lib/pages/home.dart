@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'dart:async';
 import '../pages/profile/profile.dart';
+import '../pages/workouts/workouts_detail.dart';
+import '../pages/meals/meals_details.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,6 +17,52 @@ class _HomePageState extends State<HomePage> {
   DateTime _focusedDate = DateTime.now();
   final ScrollController _scrollController = ScrollController();
   Timer? _dateCheckTimer;
+
+  static const List<Map<String, String>> workouts = [
+    {
+      'title': 'Full Body Training',
+      'image': 'assets/images/workout1.jpg',
+    },
+    {
+      'title': 'Upper Body Training',
+      'image': 'assets/images/workout2.jpg',
+    },
+    {
+      'title': 'Lower Body Training',
+      'image': 'assets/images/workout3.jpg',
+    },
+    {
+      'title': 'Push Training',
+      'image': 'assets/images/workout4.jpg',
+    },
+  ];
+
+  final List<Map<String, String>> meals = [
+    {
+      'type': 'Breakfast',
+      'name': 'Banana Toast with whey protein, and melted cheese',
+      'calories': '450 kcal',
+      'protein': '55g',
+    },
+    {
+      'type': 'Lunch',
+      'name': 'Grilled Chicken',
+      'calories': '600 kcal',
+      'protein': '55g',
+    },
+    {
+      'type': 'Snack',
+      'name': 'L-men Protein Bar',
+      'calories': '250 kcal',
+      'protein': '55g',
+    },
+    {
+      'type': 'Dinner',
+      'name': 'Salmon Bowl',
+      'calories': '550 kcal',
+      'protein': '55g',
+    },
+  ];
 
   double _appBarElevation = 0.0;
 
@@ -81,6 +129,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: const Color(0xFFECE6EF),
       appBar: AppBar(
+        scrolledUnderElevation: 1,
         backgroundColor: const Color(0xFFECE6EF),
         elevation: _appBarElevation,
         title: Column(
@@ -255,63 +304,82 @@ class _HomePageState extends State<HomePage> {
                     style: const TextStyle(fontSize: 12, color: Colors.black),
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 SizedBox(
-                  height: screenHeight * 0.20, //adjustable height
+                  height: screenHeight * 0.20, // adjustable height
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: 4,
+                    itemCount: workouts.length,
                     itemBuilder: (context, index) {
-                      return Container(
-                        width: screenWidth * 0.50,
-                        margin: EdgeInsets.only(
-                          left: index == 0 ? 14 : 4,
-                          right: index == 3 ? 20 : 8,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          image: const DecorationImage(
-                            image: AssetImage('assets/images/muscleUp.jpg'),
-                            fit: BoxFit.cover,
-                            colorFilter: ColorFilter.mode(
-                              Colors.black54,
-                              BlendMode.darken,
+                      final workout = workouts[index];
+                      final progress = (index + 1) * 0.2; // dummy % completed
+
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => WorkoutDetailPage(
+                                title:
+                                    workout['title']!, // pass title dynamically
+                                image: workout[
+                                    'image']!, // still passed but fixed in use
+                              ),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          width: screenWidth * 0.50,
+                          margin: EdgeInsets.only(
+                            left: index == 0 ? 14 : 4,
+                            right: index == workouts.length - 1 ? 20 : 8,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            image: DecorationImage(
+                              image: AssetImage(workout['image']!),
+                              fit: BoxFit.cover,
+                              colorFilter: const ColorFilter.mode(
+                                Colors.black54,
+                                BlendMode.darken,
+                              ),
                             ),
                           ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Strength Training',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
+                          child: Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  workout['title']!, // dynamic title
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
-                              const Text(
-                                '60 mins',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 11),
-                              ),
-                              const Spacer(),
-                              LinearProgressIndicator(
-                                value: 0.4,
-                                backgroundColor: Colors.grey[600],
-                                valueColor: const AlwaysStoppedAnimation<Color>(
-                                  Color(0xFF9B2354),
+                                const Text(
+                                  '45 mins', // fixed duration
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 11),
                                 ),
-                              ),
-                              const SizedBox(height: 8),
-                              const Text(
-                                '40% Completed',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 11),
-                              ),
-                            ],
+                                const Spacer(),
+                                LinearProgressIndicator(
+                                  value: progress,
+                                  backgroundColor: Colors.grey[600],
+                                  valueColor:
+                                      const AlwaysStoppedAnimation<Color>(
+                                    Color(0xFF9B2354),
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  '${(progress * 100).toInt()}% Completed',
+                                  style: const TextStyle(
+                                      color: Colors.white, fontSize: 11),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       );
@@ -320,163 +388,147 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
-
+            SizedBox(height: 10),
             // Meals
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Padding(
-                  padding: EdgeInsets.fromLTRB(15, 10, 20, 0),
+                  padding: EdgeInsets.symmetric(horizontal: 15),
                   child: Text(
                     'Planned Meals',
                     style: TextStyle(
                       color: Color(0xFF9B2354),
                       fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(15, 0, 20, 0),
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Text(
                     '# ${DateFormat('EEEE').format(_focusedDate)}s Meals',
                     style: const TextStyle(fontSize: 12, color: Colors.black),
                   ),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 10),
+
+                // Meal Cards
                 Column(
-                  children: List.generate(4, (index) {
-                    final meals = [
-                      {
-                        'type': 'Breakfast',
-                        'name': 'Banana Toast with whey protein',
-                        'calories': '450 kcal',
-                        'protein': '55g',
-                      },
-                      {
-                        'type': 'Lunch',
-                        'name': 'Grilled Chicken',
-                        'calories': '600 kcal',
-                        'protein': '55g',
-                      },
-                      {
-                        'type': 'Snack',
-                        'name': 'L-men Protein Bar',
-                        'calories': '250 kcal',
-                        'protein': '55g',
-                      },
-                      {
-                        'type': 'Dinner',
-                        'name': 'Salmon Bowl',
-                        'calories': '550 kcal',
-                        'protein': '55g',
-                      },
-                    ];
-
+                  children: List.generate(meals.length, (index) {
                     String mealName = meals[index]['name']!;
-                    if (mealName.length > 25) {
-                      mealName = '${mealName.substring(0, 25)}...';
+                    if (mealName.length > 42) {
+                      mealName = '${mealName.substring(0, 42)}...';
                     }
-
-                    return Container(
-                      height: screenHeight * 0.13, //adjustable height
-                      width: screenWidth * 0.95, //adjustable width
-                      margin: const EdgeInsets.symmetric(
-                          horizontal: 14, vertical: 5),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(25),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 8,
-                            offset: const Offset(0, 4),
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.of(context, rootNavigator: true).push(
+                          MaterialPageRoute(
+                            builder: (_) => const MealDetailPage(),
                           ),
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: Image.asset(
-                                _getMealImage(meals[index]['type']!),
-                                width: screenWidth * 0.22,
-                                height: screenHeight * 0.22,
-                                fit: BoxFit.cover,
+                        );
+                      },
+                      child: Container(
+                        height: screenWidth * 0.28,
+                        width: screenWidth * 0.95,
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 14, vertical: 5),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(25),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              blurRadius: 8,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: Image.asset(
+                                  _getMealImage(meals[index]['type']!),
+                                  width: screenWidth * 0.22,
+                                  height: screenWidth * 0.22,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: screenWidth * 0.02,
-                                vertical: screenHeight * 0.011,
-                              ),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    meals[index]['type']!,
-                                    style: const TextStyle(
-                                      color: Color(0xFF9B2354),
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      mealName,
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: screenWidth * 0.02,
+                                  vertical: screenWidth * 0.03,
+                                ),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      meals[index]['type']!,
                                       style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 11,
-                                        fontWeight: FontWeight.w500,
+                                        color: Color(0xFF9B2354),
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
                                       ),
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
                                     ),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text(
-                                            meals[index]['calories']!,
-                                            style: const TextStyle(
-                                                color: Colors.grey,
-                                                fontSize: 10),
-                                          ),
-                                          const SizedBox(width: 10),
-                                          Text(
-                                            '${meals[index]['protein']} protein',
-                                            style: const TextStyle(
-                                                color: Colors.grey,
-                                                fontSize: 10),
-                                          ),
-                                        ],
-                                      ),
-                                      IconButton(
-                                        icon: const Icon(
-                                          Icons.more_vert,
-                                          color: Color(0xFF9B2354),
-                                          size: 20,
+                                    Expanded(
+                                      child: Text(
+                                        mealName,
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w500,
                                         ),
-                                        padding: EdgeInsets.zero,
-                                        constraints: const BoxConstraints(),
-                                        onPressed: () {},
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
-                                    ],
-                                  ),
-                                ],
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                              meals[index]['calories']!,
+                                              style: const TextStyle(
+                                                  color: Colors.grey,
+                                                  fontSize: 10),
+                                            ),
+                                            const SizedBox(width: 10),
+                                            Text(
+                                              '${meals[index]['protein']} protein',
+                                              style: const TextStyle(
+                                                  color: Colors.grey,
+                                                  fontSize: 10),
+                                            ),
+                                          ],
+                                        ),
+                                        IconButton(
+                                          enableFeedback: false,
+                                          icon: const Icon(
+                                            Icons.more_vert,
+                                            color: Color(0xFF9B2354),
+                                            size: 20,
+                                          ),
+                                          padding: EdgeInsets.zero,
+                                          constraints: const BoxConstraints(),
+                                          onPressed: () {},
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     );
                   }),

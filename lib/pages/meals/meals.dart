@@ -1,4 +1,5 @@
 import 'package:calisthenics_app/pages/meals/meals_details.dart';
+import 'package:calisthenics_app/pages/meals/meals_add.dart';
 import 'package:flutter/material.dart';
 import '../../pages/profile/profile.dart';
 
@@ -186,114 +187,116 @@ class _MealsPageState extends State<MealsPage> {
                   mealName = '${mealName.substring(0, 42)}...';
                 }
 
-                return Container(
-                  height: screenWidth * 0.28,
-                  width: screenWidth * 0.95,
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(25),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 8,
-                        offset: const Offset(0, 4),
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.of(context, rootNavigator: true).push(
+                      MaterialPageRoute(
+                        builder: (_) => const MealDetailPage(),
                       ),
-                    ],
-                  ),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Image.asset(
-                            _getMealImage(meals[index]['type']!),
-                            width: screenWidth * 0.22,
-                            height: screenWidth * 0.22,
-                            fit: BoxFit.cover,
+                    );
+                  },
+                  child: Container(
+                    height: screenWidth * 0.28,
+                    width: screenWidth * 0.95,
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(25),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Image.asset(
+                              _getMealImage(meals[index]['type']!),
+                              width: screenWidth * 0.22,
+                              height: screenWidth * 0.22,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth * 0.02,
-                            vertical: screenWidth * 0.03,
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                meals[index]['type']!,
-                                style: const TextStyle(
-                                  color: Color(0xFF9B2354),
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  mealName,
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: screenWidth * 0.02,
+                              vertical: screenWidth * 0.03,
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  meals[index]['type']!,
                                   style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w500,
+                                    color: Color(0xFF9B2354),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
                                 ),
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        meals[index]['calories']!,
-                                        style: const TextStyle(
-                                            color: Colors.grey, fontSize: 10),
-                                      ),
-                                      const SizedBox(width: 10),
-                                      Text(
-                                        '${meals[index]['protein']} protein',
-                                        style: const TextStyle(
-                                            color: Colors.grey, fontSize: 10),
-                                      ),
-                                    ],
-                                  ),
-                                  IconButton(
-                                    enableFeedback: false, // no click sound
-                                    icon: const Icon(
-                                      Icons.more_vert,
-                                      color: Color(0xFF9B2354),
-                                      size: 20,
+                                Expanded(
+                                  child: Text(
+                                    mealName,
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 11,
+                                      fontWeight: FontWeight.w500,
                                     ),
-                                    padding: EdgeInsets.zero,
-                                    constraints: const BoxConstraints(),
-                                    onPressed: () {
-                                      Navigator.of(context, rootNavigator: true)
-                                          .push(
-                                        MaterialPageRoute(
-                                            builder: (_) =>
-                                                const MealDetailPage()),
-                                      );
-                                    },
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
-                                ],
-                              ),
-                            ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          meals[index]['calories']!,
+                                          style: const TextStyle(
+                                              color: Colors.grey, fontSize: 10),
+                                        ),
+                                        const SizedBox(width: 10),
+                                        Text(
+                                          '${meals[index]['protein']} protein',
+                                          style: const TextStyle(
+                                              color: Colors.grey, fontSize: 10),
+                                        ),
+                                      ],
+                                    ),
+                                    IconButton(
+                                      enableFeedback: false,
+                                      icon: const Icon(
+                                        Icons.more_vert,
+                                        color: Color(0xFF9B2354),
+                                        size: 20,
+                                      ),
+                                      padding: EdgeInsets.zero,
+                                      constraints: const BoxConstraints(),
+                                      onPressed: () {},
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 );
               }),
-            )
+            ),
           ],
         ),
       ),
@@ -306,7 +309,9 @@ class _MealsPageState extends State<MealsPage> {
         clipBehavior: Clip.antiAliasWithSaveLayer,
         child: InkWell(
           onTap: () {
-            print("Floating button tapped");
+            Navigator.of(context, rootNavigator: true).push(
+              MaterialPageRoute(builder: (_) => const MealAddPage()),
+            );
           },
           child: SizedBox(
             width: screenWidth * 0.155,

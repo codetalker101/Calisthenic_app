@@ -12,7 +12,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: true,
       title: 'CalistherPal',
-      theme: ThemeData.dark(),
+      theme: ThemeData(
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Color(0xFF9B2354), // global cursor color
+        ),
+      ),
       home: const LoginPage(), // Changed to MainNavigator
     );
   }

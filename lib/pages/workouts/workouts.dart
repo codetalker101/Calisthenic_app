@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'workouts_list.dart';
+import 'workouts_detail.dart';
 import '../../pages/profile/profile.dart';
 
 class WorkoutsPage extends StatelessWidget {
@@ -12,21 +13,19 @@ class WorkoutsPage extends StatelessWidget {
 
     final List<Map<String, dynamic>> workoutTypes = [
       {
-        'title': 'Warming Up',
-        'subtitle': 'Prepare your body for training',
-        'color': Colors.blue,
-        'icon': Icons.accessibility_new,
+        'title': 'Warming Up / Recovery Workout',
+        'image': 'assets/images/workout1.jpg',
+        'subtitle': 'Recovery workout and pre workout',
         'route': null,
       },
       {
         'title': 'Stretching',
-        'subtitle': 'Improve flexibility & recovery',
-        'color': Colors.purple,
-        'icon': Icons.self_improvement,
+        'image': 'assets/images/workout1.jpg',
+        'subtitle': 'Improve flexibility or Cooling down',
         'route': null,
       },
       {
-        'title': 'Enduranc Training',
+        'title': 'Endurance Training',
         'subtitle': 'Muscle Stamina Training',
         'color': Colors.green,
         'icon': Icons.directions_run,
@@ -58,6 +57,8 @@ class WorkoutsPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFECE6EF),
       appBar: AppBar(
+        backgroundColor: const Color(0xFFECE6EF),
+        scrolledUnderElevation: 1,
         title: const Text(
           'Workouts',
           style: TextStyle(
@@ -67,7 +68,6 @@ class WorkoutsPage extends StatelessWidget {
             color: Colors.black,
           ),
         ),
-        backgroundColor: const Color(0xFFECE6EF),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 9.0),
@@ -105,7 +105,7 @@ class WorkoutsPage extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.only(bottom: 8.0, left: 4.0),
                 child: Text(
-                  "Preparation",
+                  "Exercises",
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
@@ -120,27 +120,22 @@ class WorkoutsPage extends StatelessWidget {
                 children: workoutTypes.take(2).map((workout) {
                   return GestureDetector(
                     onTap: () {
-                      if (workout['route'] != null) {
-                        Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (_, __, ___) => workout['route'],
-                            transitionDuration: Duration.zero,
-                            reverseTransitionDuration: Duration.zero,
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (_, __, ___) => WorkoutDetailPage(
+                            title: workout['title'],
+                            image:
+                                workout['image'], // safe: always has image now
                           ),
-                        );
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                                '${workout['title']} page is not ready yet.'),
-                          ),
-                        );
-                      }
+                          transitionDuration: Duration.zero,
+                          reverseTransitionDuration: Duration.zero,
+                        ),
+                      );
                     },
                     child: Container(
                       margin: const EdgeInsets.only(bottom: 12),
-                      padding: const EdgeInsets.all(16),
+                      height: 120, // keep fixed height
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(20),
@@ -154,41 +149,60 @@ class WorkoutsPage extends StatelessWidget {
                       ),
                       child: Row(
                         children: [
-                          Container(
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              color: workout['color'].withOpacity(0.15),
-                              shape: BoxShape.circle,
-                            ),
-                            child: Icon(
-                              workout['icon'],
-                              color: workout['color'],
-                              size: 35,
+                          // Left side image with padding
+                          Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: (workout['image'] != null &&
+                                      workout['image'].isNotEmpty)
+                                  ? Image.asset(
+                                      workout['image'],
+                                      width: 100,
+                                      height: double.infinity,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Container(
+                                      width: 120,
+                                      height: double.infinity,
+                                      color: Colors.grey[200],
+                                      child: const Icon(
+                                          Icons.image_not_supported,
+                                          color: Colors.grey),
+                                    ),
                             ),
                           ),
-                          const SizedBox(width: 16),
+
+                          // Right side text
                           Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  workout['title'],
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'SF-Pro-Display-Thin',
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 12),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    workout['title'] ?? '',
+                                    style: const TextStyle(
+                                      color: Color(0xFF9B2354), // match style
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(height: 6),
-                                Text(
-                                  workout['subtitle'],
-                                  style: const TextStyle(
-                                    fontSize: 13,
-                                    fontFamily: 'SF-Pro-Display-Thin',
-                                    color: Colors.black87,
+                                  const SizedBox(height: 2),
+                                  Text(
+                                    workout['subtitle'] ?? '',
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ],
@@ -209,7 +223,7 @@ class WorkoutsPage extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.only(bottom: 8.0, left: 4.0),
                 child: Text(
-                  "Workout Programs",
+                  "Workouts programs",
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
@@ -287,6 +301,7 @@ class WorkoutsPage extends StatelessWidget {
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'SF-Pro-Display-Thin',
+                              color: Colors.black,
                             ),
                             textAlign: TextAlign.center,
                           ),

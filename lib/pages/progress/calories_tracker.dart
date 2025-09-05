@@ -12,13 +12,24 @@ class CaloriesBurnedPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFECE6EF),
       appBar: AppBar(
-        title: const Text(
-          "Calories Burned",
-          style: TextStyle(color: Colors.black),
-        ),
         backgroundColor: Color(0xFFECE6EF),
-        elevation: 1,
+        elevation: 0,
+        scrolledUnderElevation: 1,
         iconTheme: const IconThemeData(color: Colors.black),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: const [
+            Text(
+              'Calories tracker',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'AudioLinkMono',
+                color: Colors.black,
+              ),
+            ),
+          ],
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),

@@ -101,7 +101,7 @@ class _WorkoutStartPageState extends State<WorkoutStartPage> {
     if (_isRunning) return;
     setState(() => _isRunning = true);
 
-    // 🔊 Play start beep
+    // Play start beep
     _playStartFinishedBeep();
 
     int elapsed = _elapsedTime(); // already completed time
@@ -112,7 +112,7 @@ class _WorkoutStartPageState extends State<WorkoutStartPage> {
           _remainingTime--;
           elapsed++;
 
-          // 🔔 Check if a card just finished
+          // Check if a card just finished
           int timeCounter = 0;
           for (int i = 0; i < _allCards.length; i++) {
             int d = _allCards[i]["duration"];
@@ -193,7 +193,8 @@ class _WorkoutStartPageState extends State<WorkoutStartPage> {
       backgroundColor: const Color(0xFFECE6EF),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        elevation: 1,
+        elevation: 0,
+        scrolledUnderElevation: 1,
         leading: IconButton(
           enableFeedback: false, // no click sound
           icon: const Icon(Icons.arrow_back, color: Colors.black),
@@ -286,7 +287,9 @@ class _WorkoutStartPageState extends State<WorkoutStartPage> {
                       child: Text(
                         _isRunning ? "Pause" : "Start",
                         style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
                       ),
                     ),
                   ),
@@ -294,7 +297,7 @@ class _WorkoutStartPageState extends State<WorkoutStartPage> {
                   const SizedBox(height: 40),
 
                   const Text(
-                    "Workout Steps",
+                    "Workout steps",
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,

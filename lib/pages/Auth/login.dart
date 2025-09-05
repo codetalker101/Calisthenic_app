@@ -1,5 +1,6 @@
 import 'package:calisthenics_app/navigation/main_navigator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -69,6 +70,7 @@ class LoginPage extends StatelessWidget {
                 SizedBox(
                   height: 40,
                   child: TextField(
+                    cursorColor: const Color(0xFF9B2354), // cursor accent color
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
@@ -96,6 +98,7 @@ class LoginPage extends StatelessWidget {
                 SizedBox(
                   height: 40,
                   child: TextField(
+                    cursorColor: const Color(0xFF9B2354), // cursor accent color
                     obscureText: true,
                     decoration: InputDecoration(
                       filled: true,
@@ -210,9 +213,7 @@ class LoginPage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _socialButton('assets/icons/google_icon.png', 50),
-                    const SizedBox(width: 20),
-                    _socialButton('assets/icons/facebook_icon.png', 50),
+                    _socialButton('assets/icons/googleIcon.svg', 50),
                   ],
                 ),
 
@@ -255,6 +256,8 @@ class LoginPage extends StatelessWidget {
   }
 
   Widget _socialButton(String asset, double size) {
+    final isSvg = asset.toLowerCase().endsWith(".svg");
+
     return SizedBox(
       width: size,
       height: size,
@@ -270,11 +273,17 @@ class LoginPage extends StatelessWidget {
             ),
           ],
         ),
-        child: Image.asset(
-          asset,
-          width: size,
-          height: size,
-        ),
+        child: isSvg
+            ? SvgPicture.asset(
+                asset,
+                width: size,
+                height: size,
+              )
+            : Image.asset(
+                asset,
+                width: size,
+                height: size,
+              ),
       ),
     );
   }
