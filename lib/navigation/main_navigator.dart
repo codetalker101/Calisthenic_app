@@ -69,7 +69,7 @@ class _MainNavigatorState extends State<MainNavigator> {
           Navigator(
             key: _navKeys[3],
             onGenerateRoute: (route) => MaterialPageRoute(
-              builder: (context) => const ProgressPage(),
+              builder: (context) => ProgressPage(events: []), // FIXED
             ),
           ),
         ],

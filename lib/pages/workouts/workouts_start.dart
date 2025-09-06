@@ -50,7 +50,7 @@ class _WorkoutStartPageState extends State<WorkoutStartPage> {
     await _audioPlayer.play(AssetSource('sounds/notifSound(whistle1).mp3'));
   }
 
-  List<Map<String, dynamic>> _allCards = []; // ✅ initialize with empty list
+  List<Map<String, dynamic>> _allCards = []; // initialize with empty list
 
   @override
   void initState() {
@@ -192,16 +192,28 @@ class _WorkoutStartPageState extends State<WorkoutStartPage> {
     return Scaffold(
       backgroundColor: const Color(0xFFECE6EF),
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        scrolledUnderElevation: 1,
-        leading: IconButton(
-          enableFeedback: false, // no click sound
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Text(widget.title, style: const TextStyle(color: Colors.black)),
-      ),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          scrolledUnderElevation: 1,
+          leading: IconButton(
+            enableFeedback: false, // no click sound
+            icon: const Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () => Navigator.pop(context),
+          ),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                widget.title,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'AudioLinkMono',
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          )),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -317,7 +329,7 @@ class _WorkoutStartPageState extends State<WorkoutStartPage> {
                             ? Colors.blue[50]
                             : Colors.white,
                         margin: const EdgeInsets.symmetric(vertical: 8),
-                        elevation: 3,
+                        elevation: 1,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),

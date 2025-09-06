@@ -13,7 +13,7 @@ class WorkoutsPage extends StatelessWidget {
 
     final List<Map<String, dynamic>> workoutTypes = [
       {
-        'title': 'Warming Up / Recovery Workout',
+        'title': 'Warming Up',
         'image': 'assets/images/workout1.jpg',
         'subtitle': 'Recovery workout and pre workout',
         'route': null,
@@ -114,7 +114,7 @@ class WorkoutsPage extends StatelessWidget {
                   ),
                 ),
               ),
-
+              SizedBox(height: 5),
               // Vertical Rectangle Cards (Warmup & Stretching)
               Column(
                 children: workoutTypes.take(2).map((workout) {
