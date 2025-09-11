@@ -25,7 +25,7 @@ class _MealAddPageState extends State<MealAddPage> {
   final _timeController = TextEditingController();
   final _caloriesController = TextEditingController();
   String _difficulty = "Easy";
-  String _mealType = "Breakfast"; // 👈 default meal type
+  String _mealType = "Breakfast"; // default meal type
 
   List<String> _ingredients = [];
   List<String> _instructions = [];
@@ -104,7 +104,7 @@ class _MealAddPageState extends State<MealAddPage> {
         "subtitle": _subtitleController.text,
         "time": _timeController.text,
         "difficulty": _difficulty,
-        "mealType": _mealType, // 👈 added meal type
+        "mealType": _mealType,
         "calories": int.tryParse(_caloriesController.text) ?? 0,
         "ingredients": _ingredients,
         "instructions": _instructions,

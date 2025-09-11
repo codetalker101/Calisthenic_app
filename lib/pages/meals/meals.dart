@@ -1,7 +1,7 @@
 import 'package:calisthenics_app/pages/meals/meals_details.dart';
 import 'package:calisthenics_app/pages/meals/meals_add.dart';
 import 'package:flutter/material.dart';
-import '../../pages/profile/profile.dart';
+import 'package:calisthenics_app/pages/profile/profile.dart';
 
 class MealsPage extends StatefulWidget {
   const MealsPage({super.key});
@@ -191,7 +191,29 @@ class _MealsPageState extends State<MealsPage> {
                   onTap: () {
                     Navigator.of(context, rootNavigator: true).push(
                       MaterialPageRoute(
-                        builder: (_) => const MealDetailPage(),
+                        builder: (_) => MealDetailPage(
+                          imageUrl: _getMealImage(meals[index]['type']!),
+                          foodName: meals[index]['name']!,
+                          description:
+                              "A tasty ${meals[index]['type']} option packed with protein.",
+                          calories: meals[index]['calories']!,
+                          protein: meals[index]['protein']!,
+                          time: "10 minutes", // you can add this to meals[] too
+                          difficulty: "Medium", // also can be dynamic
+                          ingredients: [
+                            "200g chicken breast",
+                            "1 tbsp olive oil",
+                            "Salt & pepper",
+                            "Mixed vegetables",
+                          ],
+                          instructions: [
+                            "1. Season chicken with salt & pepper.",
+                            "2. Heat pan with olive oil.",
+                            "3. Cook chicken until golden brown.",
+                            "4. Add vegetables & stir fry.",
+                            "5. Serve warm.",
+                          ],
+                        ),
                       ),
                     );
                   },

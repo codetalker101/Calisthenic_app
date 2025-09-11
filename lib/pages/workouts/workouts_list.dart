@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'workouts_detail.dart';
+import 'package:calisthenics_app/pages/workouts/workouts_detail.dart';
 
 class WorkoutsListPage extends StatelessWidget {
   const WorkoutsListPage({super.key});
@@ -24,10 +24,6 @@ class WorkoutsListPage extends StatelessWidget {
     {
       'title': 'Pull Training',
       'image': 'assets/images/workout2.jpg',
-    },
-    {
-      'title': 'Core Training',
-      'image': 'assets/images/workout3.jpg',
     },
   ];
 

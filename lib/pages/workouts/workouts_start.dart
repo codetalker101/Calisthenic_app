@@ -241,11 +241,11 @@ class _WorkoutStartPageState extends State<WorkoutStartPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      _infoChip("assets/icons/clockIcon.svg",
-                          "${widget.duration ~/ 60} min"),
-                      const SizedBox(width: 15),
                       _infoChip(
                           "assets/icons/GraphLvlIcon.svg", widget.difficulty),
+                      const SizedBox(width: 15),
+                      _infoChip("assets/icons/clockIcon.svg",
+                          "${widget.duration ~/ 60} min"),
                       const SizedBox(width: 15),
                       _infoChip("assets/icons/CaloriesBurntIcon.svg",
                           "${widget.calories} cal"),

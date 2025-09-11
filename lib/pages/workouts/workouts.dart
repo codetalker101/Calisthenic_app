@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'workouts_list.dart';
-import 'workouts_detail.dart';
-import '../../pages/profile/profile.dart';
+import 'package:calisthenics_app/pages/workouts/workouts_list.dart';
+import 'package:calisthenics_app/pages/workouts/workouts_detail.dart';
+import 'package:calisthenics_app/pages/profile/profile.dart';
 
 class WorkoutsPage extends StatelessWidget {
   const WorkoutsPage({super.key});
@@ -96,7 +96,7 @@ class WorkoutsPage extends StatelessWidget {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,8 +125,7 @@ class WorkoutsPage extends StatelessWidget {
                         PageRouteBuilder(
                           pageBuilder: (_, __, ___) => WorkoutDetailPage(
                             title: workout['title'],
-                            image:
-                                workout['image'], // safe: always has image now
+                            image: workout['image'],
                           ),
                           transitionDuration: Duration.zero,
                           reverseTransitionDuration: Duration.zero,
@@ -233,7 +232,7 @@ class WorkoutsPage extends StatelessWidget {
                 ),
               ),
 
-              // Grid Cards (Endurance, Hypertrophy, Strength + Agility)
+              // Grid Cards (Endurance, Hypertrophy, Strength + Power)
               GridView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../pages/home.dart';
-import '../pages/workouts/workouts.dart';
-import '../pages/meals/meals.dart';
-import '../pages/progress/progress.dart';
-import '../pages/includes/_navbar.dart';
+import 'package:calisthenics_app/pages/home.dart';
+import 'package:calisthenics_app/pages/workouts/workouts.dart';
+import 'package:calisthenics_app/pages/meals/meals.dart';
+import 'package:calisthenics_app/pages/progress/progress.dart';
+import 'package:calisthenics_app/pages/includes/_navbar.dart';
 
 class MainNavigator extends StatefulWidget {
   const MainNavigator({super.key});

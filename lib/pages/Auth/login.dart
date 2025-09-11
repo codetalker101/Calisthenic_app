@@ -1,4 +1,5 @@
 import 'package:calisthenics_app/navigation/main_navigator.dart';
+import 'package:calisthenics_app/pages/Auth/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -16,39 +17,17 @@ class LoginPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SizedBox(height: 50),
+                const SizedBox(height: 80),
 
                 // App logo
-                Center(
-                  child: SizedBox(
-                    width: 70,
-                    height: 70,
-                    child: CircleAvatar(
-                      radius: 40,
-                      backgroundImage:
-                          AssetImage('assets/icons/saitama-profile-pic.png'),
-                    ),
-                  ),
+                Image(
+                  image: AssetImage(
+                      "assets/logos/calistherpal_logo.png"), // put your logo here
+                  width: 120, // adjust size as needed
+                  fit: BoxFit.contain, // keeps original shape (no crop)
                 ),
 
-                const SizedBox(height: 20),
-
-                // App title
-                SizedBox(
-                  height: 30,
-                  child: const Text(
-                    "CalisterPal",
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'AudioLinkMono',
-                      color: Colors.black,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-
-                const SizedBox(height: 5),
+                const SizedBox(height: 8),
 
                 // Subtitle
                 SizedBox(
@@ -56,7 +35,7 @@ class LoginPage extends StatelessWidget {
                   child: const Text(
                     "Sign in to continue",
                     style: TextStyle(
-                      fontSize: 13,
+                      fontSize: 15,
                       fontFamily: 'SF-Pro-Display-Thin',
                       color: Colors.black54,
                     ),
@@ -64,7 +43,7 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
 
-                const SizedBox(height: 45),
+                const SizedBox(height: 80),
 
                 // Email TextField
                 SizedBox(
@@ -130,7 +109,7 @@ class LoginPage extends StatelessWidget {
                     child: TextButton(
                       onPressed: () {},
                       child: const Text(
-                        "Forgot Password? click login directly",
+                        "Forgot Password?",
                         style: TextStyle(
                           fontFamily: 'SF-Pro-Display-Thin',
                           color: Color(0xFF9B2354),
@@ -233,7 +212,13 @@ class LoginPage extends StatelessWidget {
                         ),
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SignUpPage()),
+                          );
+                        },
                         child: const Text(
                           "Sign Up",
                           style: TextStyle(

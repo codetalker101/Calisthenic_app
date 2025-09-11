@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'workouts_start.dart';
+import 'package:calisthenics_app/pages/workouts/workouts_start.dart';
 
 class WorkoutDetailPage extends StatefulWidget {
   final String title;
@@ -17,18 +17,16 @@ class WorkoutDetailPage extends StatefulWidget {
 }
 
 class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
+  String _selectedDifficulty = "Beginner";
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
-    // Dummy data
-    const String imageUrl = "assets/images/workout1.jpg";
-
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: const Color(0xFFECE6EF),
-
       // AppBar
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -60,12 +58,12 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
       // Body
       body: Stack(
         children: [
-          // Top half workout image
+          //workout image
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.5,
             width: double.infinity,
             child: Image.asset(
-              imageUrl,
+              widget.image,
               fit: BoxFit.cover,
             ),
           ),
@@ -128,12 +126,79 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                                 color: Colors.black54,
                               ),
                             ),
-                            const SizedBox(height: 10),
+                            const SizedBox(height: 5),
 
-                            // Small info row (duration, difficulty, calories burned)
+                            // Small info row (difficulty button, duration, calories burned)
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
+                                // Difficulty selector inside a Card
+                                Container(
+                                  padding: const EdgeInsets.only(left: 0),
+                                  child: Card(
+                                    elevation: 0.1,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(6),
+                                    ),
+                                    color: Colors.white,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 4,
+                                        vertical: 2,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                            "assets/icons/GraphLvlIcon.svg",
+                                            width: 12,
+                                            height: 12,
+                                            color: Colors.black,
+                                          ),
+                                          const SizedBox(width: 5),
+                                          DropdownButtonHideUnderline(
+                                            child: DropdownButton<String>(
+                                              value: _selectedDifficulty,
+                                              isDense: true,
+                                              alignment: Alignment.centerLeft,
+                                              icon: const Icon(
+                                                Icons.arrow_drop_down,
+                                                size: 14,
+                                                color: Colors.black45,
+                                              ),
+                                              style: const TextStyle(
+                                                fontSize: 11,
+                                                color: Colors.black87,
+                                              ),
+                                              items: const [
+                                                DropdownMenuItem(
+                                                    value: "Beginner",
+                                                    child: Text("Beginner")),
+                                                DropdownMenuItem(
+                                                    value: "Easy",
+                                                    child: Text("Easy")),
+                                                DropdownMenuItem(
+                                                    value: "Intermediate",
+                                                    child:
+                                                        Text("Intermediate")),
+                                                DropdownMenuItem(
+                                                    value: "Advanced",
+                                                    child: Text("Advanced")),
+                                              ],
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  _selectedDifficulty = value!;
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+
+                                const SizedBox(width: 15),
+
                                 // Duration
                                 Row(
                                   children: [
@@ -153,30 +218,10 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                                     ),
                                   ],
                                 ),
+
                                 const SizedBox(width: 15),
 
-                                // Difficulty
-                                Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                      "assets/icons/GraphLvlIcon.svg",
-                                      width: 12,
-                                      height: 12,
-                                      color: Colors.black45,
-                                    ),
-                                    const SizedBox(width: 4),
-                                    const Text(
-                                      "Intermediate",
-                                      style: TextStyle(
-                                        fontSize: 11,
-                                        color: Colors.black45,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(width: 15),
-
-                                // Calories burned
+                                // Calories
                                 Row(
                                   children: [
                                     SvgPicture.asset(
@@ -203,16 +248,15 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                               color: Colors.black12,
                             ),
 
-                            const SizedBox(height: 10),
+                            const SizedBox(height: 0),
 
                             // WORKOUTS CARD
                             Column(
                               children: List.generate(5, (index) {
                                 return SizedBox(
-                                  width:
-                                      screenWidth * 0.9, // proportional width
-                                  height: screenHeight *
-                                      0.13, // proportional height
+                                  width: screenWidth * 0.9, // adjustable width
+                                  height:
+                                      screenHeight * 0.13, // adjustable height
                                   child: Container(
                                     margin: const EdgeInsets.symmetric(
                                         vertical: 6, horizontal: 0),
@@ -338,8 +382,7 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                   ],
                 ),
                 child: InkWell(
-                  borderRadius: BorderRadius.circular(
-                      30), // makes ripple match the button shape
+                  borderRadius: BorderRadius.circular(30),
                   onTap: () {
                     Navigator.push(
                       context,
@@ -347,11 +390,11 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                         builder: (context) => WorkoutStartPage(
                           title: widget.title,
                           videoUrl:
-                              "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4", // replace with your real workout video
+                              "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4",
                           description:
                               "A comprehensive full-body workout designed to improve strength, endurance, and flexibility. Perfect for all fitness levels.",
                           difficulty: "Intermediate",
-                          duration: 300, // in seconds (example: 5 minutes)
+                          duration: 300,
                           calories: 300,
                           steps: [
                             "Warm up with jumping jacks (1 min)",

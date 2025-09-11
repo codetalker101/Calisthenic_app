@@ -98,7 +98,7 @@ class _ProgressPageState extends State<ProgressPage> {
                 // calendar container
                 Container(
                   padding: const EdgeInsets.only(top: 5),
-                  height: screenHeight * 0.43, // slightly bigger for the title
+                  height: screenHeight * 0.43,
                   margin: EdgeInsets.symmetric(vertical: screenHeight * 0.015),
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -187,7 +187,7 @@ class _ProgressPageState extends State<ProgressPage> {
                   ),
                 ),
 
-                SizedBox(height: screenHeight * 0.001),
+                SizedBox(height: screenHeight * 0.0001),
 
                 // Macro Nutrients Card
                 Row(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'dart:async';
-import '../pages/profile/profile.dart';
-import '../pages/workouts/workouts_detail.dart';
-import '../pages/meals/meals_details.dart';
+import 'package:calisthenics_app/pages/profile/profile.dart';
+import 'package:calisthenics_app/pages/workouts/workouts_detail.dart';
+import 'package:calisthenics_app/pages/meals/meals_details.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -148,10 +148,11 @@ class _HomePageState extends State<HomePage> {
             Text(
               'Welcome back, Malik 👋',
               style: TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black87,
-                  fontFamily: "SF-Pro-Display-Thin"),
+                fontSize: 10,
+                fontWeight: FontWeight.w500,
+                color: Colors.black87,
+                fontFamily: "SF-Pro-Display-Thin",
+              ),
             ),
           ],
         ),
@@ -301,7 +302,10 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Text(
                     '# ${DateFormat('EEEE').format(_focusedDate)}s Workouts',
-                    style: const TextStyle(fontSize: 12, color: Colors.black),
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -316,14 +320,11 @@ class _HomePageState extends State<HomePage> {
 
                       return GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                            context,
+                          Navigator.of(context, rootNavigator: true).push(
                             MaterialPageRoute(
-                              builder: (context) => WorkoutDetailPage(
-                                title:
-                                    workout['title']!, // pass title dynamically
-                                image: workout[
-                                    'image']!, // still passed but fixed in use
+                              builder: (_) => WorkoutDetailPage(
+                                title: workout['title']!,
+                                image: workout['image']!,
                               ),
                             ),
                           );
@@ -361,7 +362,9 @@ class _HomePageState extends State<HomePage> {
                                 const Text(
                                   '45 mins', // fixed duration
                                   style: TextStyle(
-                                      color: Colors.white, fontSize: 11),
+                                    color: Colors.white,
+                                    fontSize: 11,
+                                  ),
                                 ),
                                 const Spacer(),
                                 LinearProgressIndicator(
@@ -376,7 +379,9 @@ class _HomePageState extends State<HomePage> {
                                 Text(
                                   '${(progress * 100).toInt()}% Completed',
                                   style: const TextStyle(
-                                      color: Colors.white, fontSize: 11),
+                                    color: Colors.white,
+                                    fontSize: 11,
+                                  ),
                                 ),
                               ],
                             ),
@@ -408,7 +413,10 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.symmetric(horizontal: 15),
                   child: Text(
                     '# ${DateFormat('EEEE').format(_focusedDate)}s Meals',
-                    style: const TextStyle(fontSize: 12, color: Colors.black),
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -424,7 +432,30 @@ class _HomePageState extends State<HomePage> {
                       onTap: () {
                         Navigator.of(context, rootNavigator: true).push(
                           MaterialPageRoute(
-                            builder: (_) => const MealDetailPage(),
+                            builder: (_) => MealDetailPage(
+                              imageUrl: _getMealImage(meals[index]['type']!),
+                              foodName: meals[index]['name']!,
+                              description:
+                                  "A tasty ${meals[index]['type']} option packed with protein.",
+                              calories: meals[index]['calories']!,
+                              protein: meals[index]['protein']!,
+                              time:
+                                  "10 minutes", // you can add this to meals[] too
+                              difficulty: "Medium", // also can be dynamic
+                              ingredients: [
+                                "200g chicken breast",
+                                "1 tbsp olive oil",
+                                "Salt & pepper",
+                                "Mixed vegetables",
+                              ],
+                              instructions: [
+                                "1. Season chicken with salt & pepper.",
+                                "2. Heat pan with olive oil.",
+                                "3. Cook chicken until golden brown.",
+                                "4. Add vegetables & stir fry.",
+                                "5. Serve warm.",
+                              ],
+                            ),
                           ),
                         );
                       },

@@ -43,7 +43,7 @@ class _WaterTrackerPageState extends State<WaterTrackerPage> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: const [
             Text(
-              'Water tracker',
+              'Water intake',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,

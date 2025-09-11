@@ -2,7 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class MealDetailPage extends StatefulWidget {
-  const MealDetailPage({super.key});
+  final String imageUrl;
+  final String foodName;
+  final String description;
+  final String calories;
+  final String protein;
+  final String time;
+  final String difficulty;
+  final List<String> ingredients;
+  final List<String> instructions;
+
+  const MealDetailPage({
+    super.key,
+    required this.imageUrl,
+    required this.foodName,
+    required this.description,
+    required this.calories,
+    required this.protein,
+    required this.time,
+    required this.difficulty,
+    required this.ingredients,
+    required this.instructions,
+  });
 
   @override
   State<MealDetailPage> createState() => _MealDetailPageState();
@@ -14,29 +35,6 @@ class _MealDetailPageState extends State<MealDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Dummy data
-    const String imageUrl = "assets/images/foodImgEx.jpg";
-    const String foodName = "Creamy Alfredo Pasta";
-    const String description =
-        "A rich and creamy Alfredo pasta topped with parmesan and parsley. "
-        "Perfect for dinner nights. soooooo fucking delicious";
-
-    // dummy data for ingredients & instructions
-    final ingredients = [
-      "200g pasta",
-      "1 cup heavy cream",
-      "1/2 cup parmesan cheese",
-      "2 tbsp butter",
-      "Parsley, salt & pepper",
-    ];
-    final instructions = [
-      "1. Boil pasta until al dente.",
-      "2. In a pan, melt butter & add cream.",
-      "3. Stir in parmesan until smooth.",
-      "4. Add pasta & toss well.",
-      "5. Garnish with parsley, serve hot!",
-    ];
-
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: const Color(0xFFECE6EF),
@@ -44,26 +42,21 @@ class _MealDetailPageState extends State<MealDetailPage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: Padding(
-          padding: const EdgeInsets.all(8.0), // spacing from edges
+          padding: const EdgeInsets.all(8.0),
           child: CircleAvatar(
-            backgroundColor: const Color(0xFFECE6EF), // 👈 circle color
+            backgroundColor: const Color(0xFFECE6EF),
             child: IconButton(
-              enableFeedback: false, // no click sound
+              enableFeedback: false,
               icon: const Icon(
                 Icons.arrow_back,
-                color: Colors.black, // 👈 arrow color
+                color: Colors.black,
               ),
               onPressed: () {
-                Navigator.pop(context); // go back
+                Navigator.pop(context);
               },
             ),
           ),
         ),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: const [],
-        ),
-        centerTitle: false,
       ),
       body: Stack(
         children: [
@@ -72,7 +65,7 @@ class _MealDetailPageState extends State<MealDetailPage> {
             height: MediaQuery.of(context).size.height * 0.5,
             width: double.infinity,
             child: Image.asset(
-              imageUrl,
+              widget.imageUrl,
               fit: BoxFit.cover,
             ),
           ),
@@ -89,15 +82,14 @@ class _MealDetailPageState extends State<MealDetailPage> {
                       MediaQuery.of(context).size.height;
 
                   return Material(
-                    elevation: 1, // gives shadow
+                    elevation: 1,
                     color: const Color(0xFFECE6EF),
                     borderRadius: isFullScreen
                         ? BorderRadius.zero
                         : const BorderRadius.vertical(
                             top: Radius.circular(24),
                           ),
-                    clipBehavior:
-                        Clip.antiAlias, // ensures rounded corners clip
+                    clipBehavior: Clip.antiAlias,
                     child: Padding(
                       padding: const EdgeInsets.all(20),
                       child: SingleChildScrollView(
@@ -118,9 +110,9 @@ class _MealDetailPageState extends State<MealDetailPage> {
                               ),
                             ),
 
-                            // Food name
+                            // Dynamic Food name
                             Text(
-                              foodName,
+                              widget.foodName,
                               style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -130,9 +122,9 @@ class _MealDetailPageState extends State<MealDetailPage> {
                             ),
                             const SizedBox(height: 5),
 
-                            // Description
+                            // Dynamic Description
                             Text(
-                              description,
+                              widget.description,
                               style: const TextStyle(
                                 fontSize: 12,
                                 color: Colors.black54,
@@ -140,11 +132,10 @@ class _MealDetailPageState extends State<MealDetailPage> {
                             ),
                             const SizedBox(height: 10),
 
-                            // Small info row (time, difficulty, calories)
+                            // Info row (time, difficulty, calories)
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                // Time
                                 Row(
                                   children: [
                                     SvgPicture.asset(
@@ -154,9 +145,9 @@ class _MealDetailPageState extends State<MealDetailPage> {
                                       color: Colors.black45,
                                     ),
                                     const SizedBox(width: 4),
-                                    const Text(
-                                      "10 minutes",
-                                      style: TextStyle(
+                                    Text(
+                                      widget.time,
+                                      style: const TextStyle(
                                         fontSize: 11,
                                         color: Colors.black45,
                                       ),
@@ -164,8 +155,6 @@ class _MealDetailPageState extends State<MealDetailPage> {
                                   ],
                                 ),
                                 const SizedBox(width: 15),
-
-                                // Difficulty
                                 Row(
                                   children: [
                                     SvgPicture.asset(
@@ -175,9 +164,9 @@ class _MealDetailPageState extends State<MealDetailPage> {
                                       color: Colors.black45,
                                     ),
                                     const SizedBox(width: 4),
-                                    const Text(
-                                      "medium",
-                                      style: TextStyle(
+                                    Text(
+                                      widget.difficulty,
+                                      style: const TextStyle(
                                         fontSize: 11,
                                         color: Colors.black45,
                                       ),
@@ -185,8 +174,6 @@ class _MealDetailPageState extends State<MealDetailPage> {
                                   ],
                                 ),
                                 const SizedBox(width: 15),
-
-                                // Calories
                                 Row(
                                   children: [
                                     SvgPicture.asset(
@@ -196,9 +183,9 @@ class _MealDetailPageState extends State<MealDetailPage> {
                                       color: Colors.black45,
                                     ),
                                     const SizedBox(width: 4),
-                                    const Text(
-                                      "300 cal",
-                                      style: TextStyle(
+                                    Text(
+                                      widget.calories,
+                                      style: const TextStyle(
                                         fontSize: 11,
                                         color: Colors.black45,
                                       ),
@@ -208,21 +195,17 @@ class _MealDetailPageState extends State<MealDetailPage> {
                               ],
                             ),
 
-                            const SizedBox(height: 0),
-
-                            // Divider line beneath info row
                             const Divider(
                               thickness: 1,
                               color: Colors.black12,
                             ),
+                            const SizedBox(height: 5),
 
-                            const SizedBox(height: 0),
-
-                            // Toggle text buttons wrapped in ONE Card
+                            // Toggle text buttons
                             Center(
                               child: SizedBox(
-                                width: 199, // ⬅️ keep width
-                                height: 30, // ⬅️ keep height
+                                width: 210,
+                                height: 30,
                                 child: Material(
                                   elevation: 1,
                                   borderRadius: BorderRadius.circular(30),
@@ -230,28 +213,29 @@ class _MealDetailPageState extends State<MealDetailPage> {
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   child: Stack(
                                     children: [
-                                      // Background fill for selected half (FADE instead of SLIDE)
+                                      // Background fill for selected half (FADE)
                                       AnimatedSwitcher(
                                         duration:
                                             const Duration(milliseconds: 200),
                                         transitionBuilder: (child, animation) =>
                                             FadeTransition(
-                                                opacity: animation,
-                                                child: child),
+                                          opacity: animation,
+                                          child: child,
+                                        ),
                                         child: Align(
                                           key: ValueKey<int>(selectedTab),
                                           alignment: selectedTab == 0
                                               ? Alignment.centerLeft
                                               : Alignment.centerRight,
                                           child: Container(
-                                            width: 199 / 2,
+                                            width: 210 / 2,
                                             height: 33,
                                             color: const Color(0xFF9B2354),
                                           ),
                                         ),
                                       ),
 
-                                      // Foreground row with divider + buttons
+                                      // Foreground row with buttons
                                       Row(
                                         children: [
                                           // LEFT TAB
@@ -297,7 +281,7 @@ class _MealDetailPageState extends State<MealDetailPage> {
                                             ),
                                           ),
 
-                                          // VERTICAL DIVIDER
+                                          // Divider
                                           Container(
                                             width: 1,
                                             height: 20,
@@ -353,72 +337,116 @@ class _MealDetailPageState extends State<MealDetailPage> {
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 20),
+                            const SizedBox(height: 10),
 
-                            // AnimatedSwitcher for Ingredients / Instructions content
-                            AnimatedSwitcher(
+                            // Ingredients / Instructions inside adjustable Card
+                            AnimatedCrossFade(
                               duration: const Duration(milliseconds: 250),
-                              transitionBuilder: (child, animation) =>
-                                  FadeTransition(
-                                      opacity: animation, child: child),
-                              child: SizedBox(
-                                key: ValueKey<int>(selectedTab),
-                                width: double.infinity,
-                                child: selectedTab == 0
-                                    ? Column(
+                              crossFadeState: selectedTab == 0
+                                  ? CrossFadeState.showFirst
+                                  : CrossFadeState.showSecond,
+                              firstChild: Card(
+                                elevation: 1,
+                                color: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 12,
+                                    horizontal: 12,
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text("Ingredients",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold)),
+                                      const Divider(
+                                          thickness: 1, color: Colors.black26),
+                                      Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
-                                        children: [
-                                          const Text(
-                                            "Ingredients",
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                          const SizedBox(height: 10),
-                                          for (var item in ingredients)
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  bottom: 6),
-                                              child: Text(
-                                                "• $item",
-                                                style: const TextStyle(
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                            ),
-                                        ],
-                                      )
-                                    : Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          const Text(
-                                            "Instructions",
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                          const SizedBox(height: 10),
-                                          for (var step in instructions)
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  bottom: 6),
-                                              child: Text(
-                                                step,
-                                                style: const TextStyle(
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                            ),
-                                        ],
+                                        children: widget.ingredients
+                                            .asMap()
+                                            .entries
+                                            .map((entry) {
+                                          final i = entry.key;
+                                          final item = entry.value;
+                                          return Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text("• $item",
+                                                  style: const TextStyle(
+                                                      color: Colors.black)),
+                                              if (i !=
+                                                  widget.ingredients.length - 1)
+                                                const Divider(
+                                                    thickness: 1,
+                                                    color: Colors.black12),
+                                            ],
+                                          );
+                                        }).toList(),
                                       ),
+                                    ],
+                                  ),
+                                ),
                               ),
-                            ),
+                              secondChild: Card(
+                                elevation: 1,
+                                color: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 12,
+                                    horizontal: 12,
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text("Instructions",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold)),
+                                      const Divider(
+                                          thickness: 1, color: Colors.black26),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: widget.instructions
+                                            .asMap()
+                                            .entries
+                                            .map((entry) {
+                                          final i = entry.key;
+                                          final step = entry.value;
+                                          return Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(step,
+                                                  style: const TextStyle(
+                                                      color: Colors.black)),
+                                              if (i !=
+                                                  widget.instructions.length -
+                                                      1)
+                                                const Divider(
+                                                    thickness: 1,
+                                                    color: Colors.black12),
+                                            ],
+                                          );
+                                        }).toList(),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            )
                           ],
                         ),
                       ),
