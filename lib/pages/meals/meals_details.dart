@@ -345,8 +345,13 @@ class _MealDetailPageState extends State<MealDetailPage> {
                               crossFadeState: selectedTab == 0
                                   ? CrossFadeState.showFirst
                                   : CrossFadeState.showSecond,
+                              // Ingredients card
                               firstChild: Card(
-                                elevation: 1,
+                                margin: const EdgeInsets.symmetric(
+                                  horizontal: 0,
+                                  vertical: 6,
+                                ),
+                                elevation: 0,
                                 color: Colors.white,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
@@ -360,12 +365,17 @@ class _MealDetailPageState extends State<MealDetailPage> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      const Text("Ingredients",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold)),
+                                      const Text(
+                                        "Ingredients",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
                                       const Divider(
-                                          thickness: 1, color: Colors.black26),
+                                        thickness: 1,
+                                        color: Colors.black26,
+                                      ),
                                       Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -379,14 +389,18 @@ class _MealDetailPageState extends State<MealDetailPage> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Text("• $item",
-                                                  style: const TextStyle(
-                                                      color: Colors.black)),
+                                              Text(
+                                                "• $item",
+                                                style: const TextStyle(
+                                                  color: Colors.black,
+                                                ),
+                                              ),
                                               if (i !=
                                                   widget.ingredients.length - 1)
                                                 const Divider(
-                                                    thickness: 1,
-                                                    color: Colors.black12),
+                                                  thickness: 1,
+                                                  color: Colors.black12,
+                                                ),
                                             ],
                                           );
                                         }).toList(),
@@ -395,8 +409,11 @@ class _MealDetailPageState extends State<MealDetailPage> {
                                   ),
                                 ),
                               ),
+                              // Instructions card
                               secondChild: Card(
-                                elevation: 1,
+                                margin: const EdgeInsets.symmetric(
+                                    horizontal: 0, vertical: 6),
+                                elevation: 0,
                                 color: Colors.white,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
@@ -410,10 +427,13 @@ class _MealDetailPageState extends State<MealDetailPage> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      const Text("Instructions",
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold)),
+                                      const Text(
+                                        "Instructions",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
                                       const Divider(
                                           thickness: 1, color: Colors.black26),
                                       Column(
@@ -429,15 +449,19 @@ class _MealDetailPageState extends State<MealDetailPage> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Text(step,
-                                                  style: const TextStyle(
-                                                      color: Colors.black)),
+                                              Text(
+                                                step,
+                                                style: const TextStyle(
+                                                  color: Colors.black,
+                                                ),
+                                              ),
                                               if (i !=
                                                   widget.instructions.length -
                                                       1)
                                                 const Divider(
-                                                    thickness: 1,
-                                                    color: Colors.black12),
+                                                  thickness: 1,
+                                                  color: Colors.black12,
+                                                ),
                                             ],
                                           );
                                         }).toList(),

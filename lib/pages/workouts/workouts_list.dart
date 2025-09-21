@@ -50,7 +50,7 @@ class WorkoutsListPage extends StatelessWidget {
             Text(
               'Workout list',
               style: TextStyle(
-                fontSize: 25,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
                 fontFamily: 'AudioLinkMono',
                 color: Colors.black,
@@ -81,19 +81,12 @@ class WorkoutsListPage extends StatelessWidget {
                 );
               },
               child: Container(
-                height: screenHeight * 0.14,
+                height: screenHeight * 0.13,
                 width: screenWidth * 0.95,
                 margin: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(25),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 8,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
                 ),
                 child: Row(
                   children: [

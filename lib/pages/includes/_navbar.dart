@@ -25,7 +25,7 @@ class Navbar extends StatelessWidget {
             ),
             child: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
-              backgroundColor: const Color(0xFFFFFFFF),
+              backgroundColor: Colors.white,
               selectedItemColor: const Color(0xFF9B2354),
               unselectedItemColor: Colors.black87,
               showSelectedLabels: true,

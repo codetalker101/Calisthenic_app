@@ -74,8 +74,8 @@ class _ProgressPageState extends State<ProgressPage> {
               child: ClipOval(
                 child: Image.asset(
                   'assets/icons/saitama-profile-pic.png',
-                  width: screenWidth * 0.13,
-                  height: screenHeight * 0.13,
+                  width: 45,
+                  height: 45,
                   fit: BoxFit.cover,
                   filterQuality: FilterQuality.high,
                 ),
@@ -103,13 +103,6 @@ class _ProgressPageState extends State<ProgressPage> {
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(screenWidth * 0.06),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        blurRadius: 10,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
                   ),
                   child: Padding(
                     padding: EdgeInsets.all(screenWidth * 0.025),
@@ -160,23 +153,23 @@ class _ProgressPageState extends State<ProgressPage> {
                             datePickerType: DatePickerType.date,
                             showEventListViewIcon: true,
                             onDateSelected: (selectedDate) {
-                              // Only navigate if the date is in current month
-                              if (selectedDate.month == _currentMonth.month &&
-                                  selectedDate.year == _currentMonth.year) {
-                                Navigator.push(
-                                  context,
+                              final normalized = DateTime(selectedDate.year,
+                                  selectedDate.month, selectedDate.day);
+
+                              if (normalized.month == _currentMonth.month &&
+                                  normalized.year == _currentMonth.year) {
+                                Navigator.of(context, rootNavigator: true).push(
                                   MaterialPageRoute(
                                     builder: (_) => SchedulePage(
-                                      selectedDate: selectedDate,
+                                      selectedDate: normalized,
                                       onEventsUpdated: _updateEvents,
                                     ),
                                   ),
                                 );
                               } else {
-                                // Just change the month view
                                 setState(() {
                                   _currentMonth = DateTime(
-                                      selectedDate.year, selectedDate.month);
+                                      normalized.year, normalized.month);
                                 });
                               }
                             },
@@ -186,8 +179,6 @@ class _ProgressPageState extends State<ProgressPage> {
                     ),
                   ),
                 ),
-
-                SizedBox(height: screenHeight * 0.0001),
 
                 // Macro Nutrients Card
                 Row(
@@ -202,7 +193,7 @@ class _ProgressPageState extends State<ProgressPage> {
                           );
                         },
                         child: Material(
-                          elevation: 1,
+                          elevation: 0,
                           borderRadius:
                               BorderRadius.circular(screenWidth * 0.06),
                           color: Colors.transparent,
@@ -220,7 +211,9 @@ class _ProgressPageState extends State<ProgressPage> {
                                   BorderRadius.circular(screenWidth * 0.06),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0.05),
+                                  color: Colors.black.withValues(
+                                      alpha:
+                                          0.05), // similar with (withOpacity)
                                   blurRadius: 10,
                                   offset: const Offset(0, 3),
                                 ),
@@ -247,7 +240,7 @@ class _ProgressPageState extends State<ProgressPage> {
                                   ],
                                 ),
 
-                                SizedBox(height: screenHeight * 0.040),
+                                SizedBox(height: 35),
 
                                 // Nutrients Row
                                 Expanded(
@@ -262,7 +255,7 @@ class _ProgressPageState extends State<ProgressPage> {
                                             Text(
                                               "Protein",
                                               style: TextStyle(
-                                                fontSize: screenWidth * 0.03,
+                                                fontSize: 12,
                                                 fontWeight: FontWeight.w500,
                                                 color: Colors.black,
                                               ),
@@ -271,11 +264,10 @@ class _ProgressPageState extends State<ProgressPage> {
                                                 height: screenHeight * 0.008),
                                             ClipRRect(
                                               borderRadius:
-                                                  BorderRadius.circular(
-                                                      screenWidth * 0.02),
+                                                  BorderRadius.circular(25),
                                               child: LinearProgressIndicator(
                                                 value: 66 / 120,
-                                                minHeight: screenHeight * 0.007,
+                                                minHeight: 6,
                                                 backgroundColor:
                                                     Colors.grey.shade300,
                                                 valueColor:
@@ -289,7 +281,7 @@ class _ProgressPageState extends State<ProgressPage> {
                                             Text(
                                               "66/120 g",
                                               style: TextStyle(
-                                                fontSize: screenWidth * 0.025,
+                                                fontSize: 10.5,
                                                 color: Colors.black54,
                                               ),
                                             ),
@@ -307,7 +299,7 @@ class _ProgressPageState extends State<ProgressPage> {
                                             Text(
                                               "Carbs",
                                               style: TextStyle(
-                                                fontSize: screenWidth * 0.03,
+                                                fontSize: 12,
                                                 fontWeight: FontWeight.w500,
                                                 color: Colors.black,
                                               ),
@@ -316,11 +308,10 @@ class _ProgressPageState extends State<ProgressPage> {
                                                 height: screenHeight * 0.008),
                                             ClipRRect(
                                               borderRadius:
-                                                  BorderRadius.circular(
-                                                      screenWidth * 0.02),
+                                                  BorderRadius.circular(25),
                                               child: LinearProgressIndicator(
                                                 value: 700 / 2500,
-                                                minHeight: screenHeight * 0.007,
+                                                minHeight: 6,
                                                 backgroundColor:
                                                     Colors.grey.shade300,
                                                 valueColor:
@@ -333,7 +324,7 @@ class _ProgressPageState extends State<ProgressPage> {
                                             Text(
                                               "700/2500 g",
                                               style: TextStyle(
-                                                fontSize: screenWidth * 0.025,
+                                                fontSize: 10.5,
                                                 color: Colors.black54,
                                               ),
                                             ),
@@ -351,7 +342,7 @@ class _ProgressPageState extends State<ProgressPage> {
                                             Text(
                                               "Fat",
                                               style: TextStyle(
-                                                fontSize: screenWidth * 0.03,
+                                                fontSize: 12,
                                                 fontWeight: FontWeight.w500,
                                                 color: Colors.black,
                                               ),
@@ -360,11 +351,10 @@ class _ProgressPageState extends State<ProgressPage> {
                                                 height: screenHeight * 0.008),
                                             ClipRRect(
                                               borderRadius:
-                                                  BorderRadius.circular(
-                                                      screenWidth * 0.02),
+                                                  BorderRadius.circular(25),
                                               child: LinearProgressIndicator(
                                                 value: 40 / 70,
-                                                minHeight: screenHeight * 0.007,
+                                                minHeight: 6,
                                                 backgroundColor:
                                                     Colors.grey.shade300,
                                                 valueColor:
@@ -377,7 +367,7 @@ class _ProgressPageState extends State<ProgressPage> {
                                             Text(
                                               "40/70 g",
                                               style: TextStyle(
-                                                fontSize: screenWidth * 0.025,
+                                                fontSize: 10.5,
                                                 color: Colors.black54,
                                               ),
                                             ),
@@ -411,7 +401,7 @@ class _ProgressPageState extends State<ProgressPage> {
                           );
                         },
                         child: Material(
-                          elevation: 1,
+                          elevation: 0,
                           borderRadius: BorderRadius.circular(25),
                           color: Colors.transparent,
                           clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -425,7 +415,9 @@ class _ProgressPageState extends State<ProgressPage> {
                               borderRadius: BorderRadius.circular(25),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0.05),
+                                  color: Colors.black.withValues(
+                                      alpha:
+                                          0.05), // similar with (withOpacity)
                                   blurRadius: 10,
                                   offset: const Offset(0, 3),
                                 ),
@@ -451,7 +443,7 @@ class _ProgressPageState extends State<ProgressPage> {
                                     ),
                                   ],
                                 ),
-                                const SizedBox(height: 33),
+                                const SizedBox(height: 35),
                                 // Weight Details
                                 Row(
                                   mainAxisAlignment:
@@ -587,7 +579,7 @@ class _ProgressPageState extends State<ProgressPage> {
                             );
                           },
                           child: Material(
-                            elevation: 1,
+                            elevation: 0,
                             borderRadius: BorderRadius.circular(25),
                             color: Color(0xFF9B2354),
                             clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -596,13 +588,6 @@ class _ProgressPageState extends State<ProgressPage> {
                               width: double.infinity,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(25),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.05),
-                                    blurRadius: 10,
-                                    offset: const Offset(0, 3),
-                                  ),
-                                ],
                               ),
                               child: Stack(
                                 children: [
@@ -666,7 +651,7 @@ class _ProgressPageState extends State<ProgressPage> {
                         ),
                       ),
 
-                      const SizedBox(width: 10),
+                      const SizedBox(width: 5),
 
                       // Water per day Card
                       Expanded(
@@ -679,7 +664,7 @@ class _ProgressPageState extends State<ProgressPage> {
                             );
                           },
                           child: Material(
-                            elevation: 1,
+                            elevation: 0,
                             borderRadius: BorderRadius.circular(25),
                             color: Color(0xFF26AAC7),
                             clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -688,13 +673,6 @@ class _ProgressPageState extends State<ProgressPage> {
                               width: double.infinity,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(25),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.05),
-                                    blurRadius: 10,
-                                    offset: const Offset(0, 3),
-                                  ),
-                                ],
                               ),
                               child: Stack(
                                 children: [
@@ -780,7 +758,7 @@ class _ProgressPageState extends State<ProgressPage> {
                             );
                           },
                           child: Material(
-                            elevation: 1,
+                            elevation: 0,
                             borderRadius: BorderRadius.circular(25),
                             color: Colors.transparent,
                             clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -790,13 +768,6 @@ class _ProgressPageState extends State<ProgressPage> {
                               decoration: BoxDecoration(
                                 color: const Color(0xFF763EB0),
                                 borderRadius: BorderRadius.circular(25),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.05),
-                                    blurRadius: 10,
-                                    offset: const Offset(0, 3),
-                                  ),
-                                ],
                               ),
                               child: Stack(
                                 children: [
@@ -860,7 +831,7 @@ class _ProgressPageState extends State<ProgressPage> {
                         ),
                       ),
 
-                      const SizedBox(width: 10),
+                      const SizedBox(width: 5),
 
                       // Workouts per day Card
                       Expanded(
@@ -873,7 +844,7 @@ class _ProgressPageState extends State<ProgressPage> {
                             );
                           },
                           child: Material(
-                            elevation: 1,
+                            elevation: 0,
                             borderRadius: BorderRadius.circular(25),
                             color: Colors.transparent,
                             clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -883,13 +854,6 @@ class _ProgressPageState extends State<ProgressPage> {
                               decoration: BoxDecoration(
                                 color: const Color(0xFFFAA34D),
                                 borderRadius: BorderRadius.circular(25),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.05),
-                                    blurRadius: 10,
-                                    offset: const Offset(0, 3),
-                                  ),
-                                ],
                               ),
                               child: Stack(
                                 children: [
@@ -963,8 +927,8 @@ class _ProgressPageState extends State<ProgressPage> {
 
       // floating button
       floatingActionButton: Material(
-        elevation: 6,
-        borderRadius: BorderRadius.circular(screenWidth * 0.035),
+        elevation: 0.5,
+        borderRadius: BorderRadius.circular(20),
         color: const Color(0xFF9B2354),
         clipBehavior: Clip.antiAliasWithSaveLayer,
         child: InkWell(
@@ -976,13 +940,13 @@ class _ProgressPageState extends State<ProgressPage> {
             );
           },
           child: Container(
-            width: screenWidth * 0.155,
-            height: screenWidth * 0.155,
+            width: 55,
+            height: 55,
             alignment: Alignment.center,
             child: SvgPicture.asset(
               'assets/icons/ActivitiesLogsIcons.svg',
-              width: screenWidth * 0.06,
-              height: screenWidth * 0.06,
+              width: 23,
+              height: 23,
               color: Colors.white,
             ),
           ),

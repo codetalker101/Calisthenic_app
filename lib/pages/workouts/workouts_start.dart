@@ -329,7 +329,7 @@ class _WorkoutStartPageState extends State<WorkoutStartPage> {
                             ? Colors.blue[50]
                             : Colors.white,
                         margin: const EdgeInsets.symmetric(vertical: 8),
-                        elevation: 1,
+                        elevation: 0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),

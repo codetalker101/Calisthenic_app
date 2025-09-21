@@ -11,7 +11,7 @@ class MealsPage extends StatefulWidget {
 }
 
 class _MealsPageState extends State<MealsPage> {
-  // meals card background by its type
+  // meals card background by its type (dummy background pictures)
   String _getMealImage(String mealType) {
     switch (mealType.toLowerCase()) {
       case 'breakfast':
@@ -90,8 +90,8 @@ class _MealsPageState extends State<MealsPage> {
               child: ClipOval(
                 child: Image.asset(
                   'assets/icons/saitama-profile-pic.png',
-                  width: screenWidth * 0.13,
-                  height: screenHeight * 0.13,
+                  width: 45,
+                  height: 45,
                   fit: BoxFit.cover,
                   filterQuality: FilterQuality.high,
                 ),
@@ -115,13 +115,6 @@ class _MealsPageState extends State<MealsPage> {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(25),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 8,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
                       ),
                       child: TextField(
                         decoration: InputDecoration(
@@ -154,13 +147,6 @@ class _MealsPageState extends State<MealsPage> {
                     decoration: BoxDecoration(
                       color: const Color(0xFF9B2354),
                       shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
-                          blurRadius: 6,
-                          offset: const Offset(0, 3),
-                        ),
-                      ],
                     ),
                     child: IconButton(
                       icon: const Icon(
@@ -218,20 +204,13 @@ class _MealsPageState extends State<MealsPage> {
                     );
                   },
                   child: Container(
-                    height: screenWidth * 0.28,
+                    height: screenHeight * 0.13,
                     width: screenWidth * 0.95,
                     margin:
                         const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(25),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 8,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
                     ),
                     child: Row(
                       children: [
@@ -242,7 +221,7 @@ class _MealsPageState extends State<MealsPage> {
                             child: Image.asset(
                               _getMealImage(meals[index]['type']!),
                               width: screenWidth * 0.22,
-                              height: screenWidth * 0.22,
+                              height: screenHeight * 0.22,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -251,10 +230,9 @@ class _MealsPageState extends State<MealsPage> {
                           child: Padding(
                             padding: EdgeInsets.symmetric(
                               horizontal: screenWidth * 0.02,
-                              vertical: screenWidth * 0.03,
+                              vertical: screenHeight * 0.013,
                             ),
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
@@ -325,8 +303,8 @@ class _MealsPageState extends State<MealsPage> {
 
       // Floating Add (+) button
       floatingActionButton: Material(
-        elevation: 6,
-        borderRadius: BorderRadius.circular(15),
+        elevation: 0.5,
+        borderRadius: BorderRadius.circular(20),
         color: const Color(0xFF9B2354),
         clipBehavior: Clip.antiAliasWithSaveLayer,
         child: InkWell(
@@ -336,12 +314,12 @@ class _MealsPageState extends State<MealsPage> {
             );
           },
           child: SizedBox(
-            width: screenWidth * 0.155,
-            height: screenWidth * 0.155,
+            width: 55,
+            height: 55,
             child: const Icon(
               Icons.add,
               color: Colors.white,
-              size: 28,
+              size: 33,
             ),
           ),
         ),

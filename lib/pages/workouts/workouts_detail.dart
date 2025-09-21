@@ -19,6 +19,15 @@ class WorkoutDetailPage extends StatefulWidget {
 class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
   String _selectedDifficulty = "Beginner";
 
+  // ✅ Added workout titles list
+  final List<String> workoutTitles = [
+    "Warm up with jumping jacks",
+    "Push-ups",
+    "Squats",
+    "Plank",
+    "Cool down stretches",
+  ];
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -34,16 +43,15 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
         leading: Padding(
           padding: const EdgeInsets.all(8.0), // spacing from edges
           child: CircleAvatar(
-            backgroundColor:
-                const Color(0xFFECE6EF), // circle color behind backbutton
+            backgroundColor: const Color(0xFFECE6EF),
             child: IconButton(
-              enableFeedback: false, // no click sound
+              enableFeedback: false,
               icon: const Icon(
                 Icons.arrow_back,
-                color: Colors.black, // arrow color
+                color: Colors.black,
               ),
               onPressed: () {
-                Navigator.pop(context); // go back
+                Navigator.pop(context);
               },
             ),
           ),
@@ -80,11 +88,11 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                       MediaQuery.of(context).size.height;
 
                   return Material(
-                    elevation: 1,
+                    elevation: 0,
                     color: const Color(0xFFECE6EF),
                     borderRadius: isFullScreen
                         ? BorderRadius.zero
-                        : const BorderRadius.vertical(top: Radius.circular(24)),
+                        : const BorderRadius.vertical(top: Radius.circular(25)),
                     clipBehavior: Clip.antiAlias,
                     child: Padding(
                       padding: const EdgeInsets.all(20),
@@ -101,7 +109,7 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                                 margin: const EdgeInsets.only(bottom: 15),
                                 decoration: BoxDecoration(
                                   color: Colors.grey[400],
-                                  borderRadius: BorderRadius.circular(10),
+                                  borderRadius: BorderRadius.circular(25),
                                 ),
                               ),
                             ),
@@ -119,9 +127,9 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                             const SizedBox(height: 5),
 
                             // Description
-                            Text(
+                            const Text(
                               "A comprehensive full-body workout designed to improve strength, endurance, and flexibility. Perfect for all fitness levels.",
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.black54,
                               ),
@@ -133,66 +141,60 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 // Difficulty selector inside a Card
-                                Container(
-                                  padding: const EdgeInsets.only(left: 0),
-                                  child: Card(
-                                    elevation: 0.1,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(6),
-                                    ),
-                                    color: Colors.white,
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 4,
-                                        vertical: 2,
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          SvgPicture.asset(
-                                            "assets/icons/GraphLvlIcon.svg",
-                                            width: 12,
-                                            height: 12,
-                                            color: Colors.black,
-                                          ),
-                                          const SizedBox(width: 5),
-                                          DropdownButtonHideUnderline(
-                                            child: DropdownButton<String>(
-                                              value: _selectedDifficulty,
-                                              isDense: true,
-                                              alignment: Alignment.centerLeft,
-                                              icon: const Icon(
-                                                Icons.arrow_drop_down,
-                                                size: 14,
-                                                color: Colors.black45,
-                                              ),
-                                              style: const TextStyle(
-                                                fontSize: 11,
-                                                color: Colors.black87,
-                                              ),
-                                              items: const [
-                                                DropdownMenuItem(
-                                                    value: "Beginner",
-                                                    child: Text("Beginner")),
-                                                DropdownMenuItem(
-                                                    value: "Easy",
-                                                    child: Text("Easy")),
-                                                DropdownMenuItem(
-                                                    value: "Intermediate",
-                                                    child:
-                                                        Text("Intermediate")),
-                                                DropdownMenuItem(
-                                                    value: "Advanced",
-                                                    child: Text("Advanced")),
-                                              ],
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  _selectedDifficulty = value!;
-                                                });
-                                              },
+                                Card(
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  color: Colors.white,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 4, vertical: 2),
+                                    child: Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          "assets/icons/GraphLvlIcon.svg",
+                                          width: 12,
+                                          height: 12,
+                                          color: Colors.black,
+                                        ),
+                                        const SizedBox(width: 5),
+                                        DropdownButtonHideUnderline(
+                                          child: DropdownButton<String>(
+                                            value: _selectedDifficulty,
+                                            isDense: true,
+                                            alignment: Alignment.centerLeft,
+                                            icon: const Icon(
+                                              Icons.arrow_drop_down,
+                                              size: 14,
+                                              color: Colors.black45,
                                             ),
+                                            style: const TextStyle(
+                                              fontSize: 11,
+                                              color: Colors.black87,
+                                            ),
+                                            items: const [
+                                              DropdownMenuItem(
+                                                  value: "Beginner",
+                                                  child: Text("Beginner")),
+                                              DropdownMenuItem(
+                                                  value: "Easy",
+                                                  child: Text("Easy")),
+                                              DropdownMenuItem(
+                                                  value: "Intermediate",
+                                                  child: Text("Intermediate")),
+                                              DropdownMenuItem(
+                                                  value: "Advanced",
+                                                  child: Text("Advanced")),
+                                            ],
+                                            onChanged: (value) {
+                                              setState(() {
+                                                _selectedDifficulty = value!;
+                                              });
+                                            },
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
@@ -248,15 +250,12 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                               color: Colors.black12,
                             ),
 
-                            const SizedBox(height: 0),
-
                             // WORKOUTS CARD
                             Column(
                               children: List.generate(5, (index) {
                                 return SizedBox(
-                                  width: screenWidth * 0.9, // adjustable width
-                                  height:
-                                      screenHeight * 0.13, // adjustable height
+                                  width: screenWidth * 0.9,
+                                  height: screenHeight * 0.13,
                                   child: Container(
                                     margin: const EdgeInsets.symmetric(
                                         vertical: 6, horizontal: 0),
@@ -264,20 +263,13 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                                         horizontal: 10, vertical: 10),
                                     decoration: BoxDecoration(
                                       color: Colors.white,
-                                      borderRadius: BorderRadius.circular(15),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.05),
-                                          blurRadius: 5,
-                                          offset: const Offset(0, 3),
-                                        ),
-                                      ],
+                                      borderRadius: BorderRadius.circular(25),
                                     ),
                                     child: Row(
                                       children: [
                                         ClipRRect(
                                           borderRadius:
-                                              BorderRadius.circular(12),
+                                              BorderRadius.circular(18),
                                           child: Image.asset(
                                             "assets/images/workout1.jpg",
                                             width: screenWidth * 0.18,
@@ -293,34 +285,32 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
-                                              const Text(
-                                                "Workout",
-                                                style: TextStyle(
-                                                  fontSize: 16,
+                                              // ✅ Use workoutTitles
+                                              Text(
+                                                workoutTitles[index],
+                                                style: const TextStyle(
+                                                  fontSize: 14,
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors.black87,
                                                 ),
                                               ),
-                                              const SizedBox(height: 18),
+                                              const SizedBox(height: 30),
                                               // Progress bar
                                               SizedBox(
-                                                width:
-                                                    screenWidth * 0.55, // width
+                                                width: screenWidth * 0.55,
                                                 child: ClipRRect(
                                                   borderRadius:
                                                       BorderRadius.circular(8),
                                                   child:
-                                                      LinearProgressIndicator(
-                                                    value: 0.4, // 40% completed
-                                                    minHeight: 4.5, // height
+                                                      const LinearProgressIndicator(
+                                                    value: 0.4,
+                                                    minHeight: 4.5,
                                                     backgroundColor:
-                                                        Colors.grey[300],
+                                                        Colors.black26,
                                                     valueColor:
-                                                        const AlwaysStoppedAnimation<
+                                                        AlwaysStoppedAnimation<
                                                             Color>(
-                                                      Color(
-                                                        0xFF9B2354,
-                                                      ), // progress bar color
+                                                      Color(0xFF9B2354),
                                                     ),
                                                   ),
                                                 ),
@@ -329,14 +319,14 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                                               const Text(
                                                 "40% completed",
                                                 style: TextStyle(
-                                                  fontSize: 12,
+                                                  fontSize: 10,
                                                   color: Colors.black54,
                                                 ),
                                               ),
                                             ],
                                           ),
                                         ),
-                                        Icon(
+                                        const Icon(
                                           Icons.arrow_forward_ios,
                                           size: 16,
                                           color: Colors.grey,
@@ -348,7 +338,7 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                               }),
                             ),
 
-                            const SizedBox(height: 80), // space for FAB
+                            const SizedBox(height: 80),
                           ],
                         ),
                       ),
@@ -365,7 +355,7 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
             left: 20,
             right: 20,
             child: Material(
-              elevation: 1,
+              elevation: 0.5,
               borderRadius: BorderRadius.circular(30),
               color: Colors.transparent,
               clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -373,13 +363,6 @@ class _WorkoutDetailPageState extends State<WorkoutDetailPage> {
                 decoration: BoxDecoration(
                   color: const Color(0xFF9B2354),
                   borderRadius: BorderRadius.circular(30),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
-                      blurRadius: 10,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
                 ),
                 child: InkWell(
                   borderRadius: BorderRadius.circular(30),

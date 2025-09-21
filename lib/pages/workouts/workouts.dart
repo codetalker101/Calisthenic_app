@@ -40,7 +40,7 @@ class WorkoutsPage extends StatelessWidget {
       },
       {
         'title': 'Strength Training',
-        'subtitle': 'Max Power Building',
+        'subtitle': 'Max Strength Building',
         'color': Colors.orange,
         'icon': Icons.bolt,
         'route': const WorkoutsListPage(),
@@ -85,8 +85,8 @@ class WorkoutsPage extends StatelessWidget {
               child: ClipOval(
                 child: Image.asset(
                   'assets/icons/saitama-profile-pic.png',
-                  width: screenWidth * 0.13,
-                  height: screenHeight * 0.13,
+                  width: 45,
+                  height: 45,
                   fit: BoxFit.cover,
                   filterQuality: FilterQuality.high,
                 ),
@@ -120,31 +120,22 @@ class WorkoutsPage extends StatelessWidget {
                 children: workoutTypes.take(2).map((workout) {
                   return GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        PageRouteBuilder(
-                          pageBuilder: (_, __, ___) => WorkoutDetailPage(
-                            title: workout['title'],
-                            image: workout['image'],
+                      Navigator.of(context, rootNavigator: true).push(
+                        MaterialPageRoute(
+                          builder: (_) => WorkoutDetailPage(
+                            title: workout['title']!,
+                            image: workout['image']!,
                           ),
-                          transitionDuration: Duration.zero,
-                          reverseTransitionDuration: Duration.zero,
                         ),
                       );
                     },
                     child: Container(
                       margin: const EdgeInsets.only(bottom: 12),
-                      height: 120, // keep fixed height
+                      height: screenHeight * 0.13,
+                      width: screenWidth * 0.95,
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 5,
-                            offset: const Offset(0, 1),
-                          ),
-                        ],
+                        borderRadius: BorderRadius.circular(25),
                       ),
                       child: Row(
                         children: [
@@ -232,6 +223,8 @@ class WorkoutsPage extends StatelessWidget {
                 ),
               ),
 
+              const SizedBox(height: 8),
+
               // Grid Cards (Endurance, Hypertrophy, Strength + Power)
               GridView.builder(
                 physics: const NeverScrollableScrollPhysics(),
@@ -269,13 +262,6 @@ class WorkoutsPage extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(25),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 5,
-                            offset: const Offset(0, 1),
-                          ),
-                        ],
                       ),
                       padding: const EdgeInsets.all(15),
                       child: Column(
@@ -284,7 +270,8 @@ class WorkoutsPage extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.all(12),
                             decoration: BoxDecoration(
-                              color: workout['color'].withOpacity(0.15),
+                              color: workout['color'].withValues(
+                                  alpha: 0.15), // similar with (withOpacity)
                               shape: BoxShape.circle,
                             ),
                             child: Icon(

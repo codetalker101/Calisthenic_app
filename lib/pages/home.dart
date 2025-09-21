@@ -173,8 +173,8 @@ class _HomePageState extends State<HomePage> {
               child: ClipOval(
                 child: Image.asset(
                   'assets/icons/saitama-profile-pic.png',
-                  width: screenWidth * 0.13,
-                  height: screenHeight * 0.13,
+                  width: 45,
+                  height: 45,
                   fit: BoxFit.cover,
                   filterQuality: FilterQuality.high,
                 ),
@@ -193,20 +193,12 @@ class _HomePageState extends State<HomePage> {
               color: Colors.transparent,
               clipBehavior: Clip.antiAliasWithSaveLayer,
               child: Container(
-                height: screenWidth * 0.25, //adjustable height
-                width: screenHeight * 0.95, //adjustable width
+                height: screenHeight * 0.13, //adjustable height
+                width: screenWidth * 0.95, //adjustable width
                 margin: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
                   color: const Color(0xFFFFFFFF),
                   borderRadius: BorderRadius.circular(25),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 10,
-                      spreadRadius: 0,
-                      offset: const Offset(0, 1),
-                    ),
-                  ],
                 ),
                 child: Column(
                   children: [
@@ -393,7 +385,9 @@ class _HomePageState extends State<HomePage> {
                 ),
               ],
             ),
+
             SizedBox(height: 10),
+
             // Meals
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -460,20 +454,13 @@ class _HomePageState extends State<HomePage> {
                         );
                       },
                       child: Container(
-                        height: screenWidth * 0.28,
+                        height: screenHeight * 0.13,
                         width: screenWidth * 0.95,
                         margin: const EdgeInsets.symmetric(
                             horizontal: 14, vertical: 5),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(25),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              blurRadius: 8,
-                              offset: const Offset(0, 4),
-                            ),
-                          ],
                         ),
                         child: Row(
                           children: [

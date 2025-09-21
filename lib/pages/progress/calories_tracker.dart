@@ -1,21 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_echarts/flutter_echarts.dart';
 
-class CaloriesBurnedPage extends StatelessWidget {
+class CaloriesBurnedPage extends StatefulWidget {
   const CaloriesBurnedPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    double burnedCalories = 750;
-    double targetCalories = 1200;
-    double progress = burnedCalories / targetCalories;
+  State<CaloriesBurnedPage> createState() => _CaloriesBurnedPageState();
+}
 
+class _CaloriesBurnedPageState extends State<CaloriesBurnedPage> {
+  double burnedCalories = 750;
+  double targetCalories = 1200;
+
+  // Example weekly calories burned
+  List<double> weeklyCalories = [500, 750, 600, 800, 700, 900, 1000];
+
+  int selectedChart = 0; // 0 = bar chart (calories), 1 = activity breakdown
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFECE6EF),
       appBar: AppBar(
-        backgroundColor: Color(0xFFECE6EF),
+        backgroundColor: Colors.white,
         elevation: 0,
         scrolledUnderElevation: 1,
-        iconTheme: const IconThemeData(color: Colors.black),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: const [
@@ -31,135 +40,176 @@ class CaloriesBurnedPage extends StatelessWidget {
           ],
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
+      body: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Circular progress (daily target)
-            SizedBox(
-              height: 180,
-              width: 180,
-              child: Stack(
-                fit: StackFit.expand,
+            // 🔹 Top container with chart
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.fromLTRB(16, 15, 16, 20),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(45),
+                  bottomRight: Radius.circular(45),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CircularProgressIndicator(
-                    value: progress,
-                    strokeWidth: 12,
-                    backgroundColor: Colors.grey[400],
-                    valueColor: const AlwaysStoppedAnimation(Color(0xFF9B2354)),
+                  const Text(
+                    "Last 7 Days",
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontFamily: "SF-Pro-Display-Thin",
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black,
+                    ),
                   ),
-                  Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "${burnedCalories.toInt()} kcal",
-                          style: const TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
-                        ),
-                        const SizedBox(height: 6),
-                        Text(
-                          "of ${targetCalories.toInt()} kcal",
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.black54,
-                          ),
-                        ),
-                      ],
+                  const SizedBox(height: 10),
+
+                  // 🔹 Chart
+                  SizedBox(
+                    height: 260,
+                    child: Echarts(
+                      option: '''
+                        {
+                          tooltip: {
+                            trigger: 'item',
+                            formatter: function(params) {
+                              return params.name + ': ' + params.value + ' kcal';
+                            }
+                          },
+                          xAxis: {
+                            type: 'category',
+                            data: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+                            axisTick: { show: false },
+                            axisLine: { lineStyle: { color: '#999' } },
+                            axisLabel: { color: '#666' }
+                          },
+                          yAxis: {
+                            type: 'value',
+                            min: 0,
+                            max: 3000,
+                            axisLine: { lineStyle: { color: '#999' } },
+                            axisLabel: {
+                              formatter: '{value}',
+                              color: '#666'
+                            },
+                            splitLine: { lineStyle: { color: '#eee' } }
+                          },
+                          series: [{
+                            data: ${weeklyCalories.toString()},
+                            type: 'bar',
+                            barWidth: 30,
+                            itemStyle: {
+                              color: '#9B2354',
+                              borderRadius: [6, 6, 0, 0]
+                            },
+                            label: {
+                              show: false   // 🔹 hide static labels
+                            }
+                          }],
+                          grid: {
+                            left: '5%',
+                            right: '5%',
+                            bottom: '10%',
+                            top: '5%',
+                            containLabel: true
+                          }
+                        }
+                    ''',
                     ),
                   ),
                 ],
               ),
             ),
 
-            const SizedBox(height: 30),
+            const SizedBox(height: 10),
 
-            // Progress bar
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "Daily Progress",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 30),
-
-            // Burned activities list
-            Expanded(
-              child: ListView(
+            // 🔹 Burned vs Target Cards
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
                 children: [
-                  _buildActivityCard("Running", "30 min", 300),
-                  _buildActivityCard("Cycling", "45 min", 250),
-                  _buildActivityCard("Push-ups", "20 min", 200),
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 25,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Icon(Icons.local_fire_department,
+                              color: Color(0xFF9B2354), size: 30),
+                          const SizedBox(height: 8),
+                          Text(
+                            "${burnedCalories.toInt()} kcal",
+                            style: const TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF9B2354),
+                            ),
+                          ),
+                          Text(
+                            "Burned",
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontFamily: "SF-Pro-Display-Thin",
+                              color: Colors.grey[600],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 25,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Icon(Icons.flag,
+                              color: Color(0xFFFFD700), size: 30),
+                          const SizedBox(height: 8),
+                          Text(
+                            "${targetCalories.toInt()} kcal",
+                            style: const TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFFFFD700),
+                            ),
+                          ),
+                          Text(
+                            "Target",
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontFamily: "SF-Pro-Display-Thin",
+                              color: Colors.grey[600],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
           ],
         ),
-      ),
-
-      // Add activity button
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color(0xFF9B2354),
-        onPressed: () {
-          // Navigate to Add Activity Page
-        },
-        child: const Icon(Icons.add, color: Colors.white),
-      ),
-    );
-  }
-
-  Widget _buildActivityCard(String title, String duration, int calories) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 6,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          const Icon(Icons.local_fire_department, color: Color(0xFF9B2354)),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(title,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: Colors.black)),
-                Text(duration,
-                    style:
-                        const TextStyle(color: Colors.black54, fontSize: 13)),
-              ],
-            ),
-          ),
-          Text(
-            "$calories kcal",
-            style: const TextStyle(
-                fontWeight: FontWeight.bold, color: Colors.black87),
-          ),
-        ],
       ),
     );
   }
