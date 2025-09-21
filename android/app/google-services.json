@@ -1,5 +1,6 @@
 {
   "project_info": {
+    ""
     "project_number": "166515305939",
     "project_id": "calisthenics-app-3d213",
     "storage_bucket": "calisthenics-app-3d213.firebasestorage.app"
@@ -15,7 +16,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC6GvuNtnhoP2emAQ_0mij4sy51t3oFAsw"
+          "current_key": "pushedbymistakealreadychanged,currentkeywillnotworking"
         }
       ],
       "services": {
