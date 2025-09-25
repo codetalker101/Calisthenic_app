@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:calisthenics_app/pages/home.dart';
-import 'package:calisthenics_app/pages/workouts/workouts.dart';
-import 'package:calisthenics_app/pages/meals/meals.dart';
-import 'package:calisthenics_app/pages/progress/progress.dart';
-import 'package:calisthenics_app/pages/includes/_navbar.dart';
+import 'package:calisthenics_app/features/home/home.dart';
+import 'package:calisthenics_app/features/workouts/presentation/workouts.dart';
+import 'package:calisthenics_app/features/meals/presentation/meals.dart';
+import 'package:calisthenics_app/features/progress/presentation/progress.dart';
+import 'package:calisthenics_app/core/widgets/_navbar.dart';
 
 class MainNavigator extends StatefulWidget {
   const MainNavigator({super.key});
@@ -37,39 +37,50 @@ class _MainNavigatorState extends State<MainNavigator> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF151515),
-      bottomNavigationBar: Navbar(
-        currentIndex: _currentIndex,
-        onTabTapped: _onTabTapped,
-      ),
-      body: IndexedStack(
-        index: _currentIndex,
+      extendBody: true, // body goes under navbar
+      body: Stack(
         children: [
-          // Home Tab Navigator
-          Navigator(
-            key: _navKeys[0],
-            onGenerateRoute: (route) => MaterialPageRoute(
-              builder: (context) => const HomePage(),
-            ),
+          /// Page content
+          IndexedStack(
+            index: _currentIndex,
+            children: [
+              Navigator(
+                key: _navKeys[0],
+                onGenerateRoute: (route) => MaterialPageRoute(
+                  builder: (context) => const HomePage(),
+                ),
+              ),
+              Navigator(
+                key: _navKeys[1],
+                onGenerateRoute: (route) => MaterialPageRoute(
+                  builder: (context) => const WorkoutsPage(),
+                ),
+              ),
+              Navigator(
+                key: _navKeys[2],
+                onGenerateRoute: (route) => MaterialPageRoute(
+                  builder: (context) => const MealsPage(),
+                ),
+              ),
+              Navigator(
+                key: _navKeys[3],
+                onGenerateRoute: (route) => MaterialPageRoute(
+                  builder: (context) => ProgressPage(events: []),
+                ),
+              ),
+            ],
           ),
-          // Workouts Tab Navigator
-          Navigator(
-            key: _navKeys[1],
-            onGenerateRoute: (route) => MaterialPageRoute(
-              builder: (context) => const WorkoutsPage(),
-            ),
-          ),
-          // Meals Tab Navigator
-          Navigator(
-            key: _navKeys[2],
-            onGenerateRoute: (route) => MaterialPageRoute(
-              builder: (context) => const MealsPage(),
-            ),
-          ),
-          // Progress Tab Navigator
-          Navigator(
-            key: _navKeys[3],
-            onGenerateRoute: (route) => MaterialPageRoute(
-              builder: (context) => ProgressPage(events: []), // FIXED
+
+          /// Floating Navbar
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding:
+                  const EdgeInsets.only(bottom: 15), // distance from bottom
+              child: Navbar(
+                currentIndex: _currentIndex,
+                onTabTapped: _onTabTapped,
+              ),
             ),
           ),
         ],
